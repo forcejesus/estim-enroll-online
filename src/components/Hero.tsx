@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from './ui/button';
+import { Link as ScrollLink } from 'react-scroll';
 
 const Hero = () => {
   return (
@@ -23,11 +24,13 @@ const Hero = () => {
                 vous propose une formation d'excellence adaptée aux besoins du marché.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="default" size="lg">
-                  Pré-inscription
-                </Button>
-                <Button variant="outline" size="lg">
-                  Découvrir nos filières
+                <ScrollLink to="register" smooth={true} duration={500}>
+                  <Button variant="default" size="lg">
+                    Pré-inscription
+                  </Button>
+                </ScrollLink>
+                <Button variant="outline" size="lg" onClick={() => document.getElementById('complete-registration-dialog')?.click()}>
+                  Inscription complète
                 </Button>
               </div>
             </div>

@@ -6,6 +6,7 @@ import Partners from '@/components/Partners';
 import Tracks from '@/components/Tracks';
 import PreRegistrationForm from '@/components/PreRegistrationForm';
 import Footer from '@/components/Footer';
+import CompleteRegistrationDialog from '@/components/CompleteRegistrationDialog';
 
 const Index = () => {
   return (
@@ -49,6 +50,7 @@ const Index = () => {
         <PreRegistrationForm />
       </main>
       <Footer />
+      <CompleteRegistrationDialog />
     </div>
   );
 };

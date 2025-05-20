@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
+import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,9 +55,19 @@ const Navbar = () => {
           </Link>
         </nav>
 
-        <div className="hidden md:block">
-          <Button variant="default" size="default">
-            S'inscrire
+        <div className="hidden md:flex items-center space-x-3">
+          <ScrollLink to="register" smooth={true} duration={500}>
+            <Button variant="outline" size="default">
+              Pré-inscription
+            </Button>
+          </ScrollLink>
+          <Button 
+            variant="default" 
+            size="default" 
+            id="complete-registration-dialog"
+            onClick={() => document.getElementById('complete-registration-trigger')?.click()}
+          >
+            Inscription complète
           </Button>
         </div>
 
@@ -101,9 +112,24 @@ const Navbar = () => {
           <Link to="#contact" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
             Contact
           </Link>
-          <Button variant="default" size="default" className="w-full">
-            S'inscrire
-          </Button>
+          <div className="grid grid-cols-1 gap-3 pt-2">
+            <ScrollLink to="register" smooth={true} duration={500} onClick={toggleMobileMenu}>
+              <Button variant="outline" size="default" className="w-full">
+                Pré-inscription
+              </Button>
+            </ScrollLink>
+            <Button 
+              variant="default" 
+              size="default" 
+              className="w-full"
+              onClick={() => {
+                document.getElementById('complete-registration-trigger')?.click();
+                toggleMobileMenu();
+              }}
+            >
+              Inscription complète
+            </Button>
+          </div>
         </div>
       </div>
     </header>
