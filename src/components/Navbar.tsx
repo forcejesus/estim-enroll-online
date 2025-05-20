@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Button from './ui/Button';
+import { Button } from './ui/button';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,7 +55,7 @@ const Navbar = () => {
         </nav>
 
         <div className="hidden md:block">
-          <Button variant="primary" size="md">
+          <Button variant="default" size="default">
             S'inscrire
           </Button>
         </div>
@@ -101,7 +101,7 @@ const Navbar = () => {
           <Link to="#contact" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
             Contact
           </Link>
-          <Button variant="primary" size="md" className="w-full">
+          <Button variant="default" size="default" className="w-full">
             S'inscrire
           </Button>
         </div>

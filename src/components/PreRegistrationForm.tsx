@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import Button from './ui/Button';
+import { Button } from './ui/button';
 import { useToast } from '@/hooks/use-toast';
 
 const PreRegistrationForm = () => {
@@ -150,9 +150,9 @@ const PreRegistrationForm = () => {
               <div className="pt-4">
                 <Button 
                   type="submit" 
-                  variant="primary" 
+                  variant="default"
                   size="lg" 
-                  className="w-full"
+                  className="w-full bg-estim-green hover:bg-estim-darkGreen"
                   disabled={formState.isSubmitting}
                 >
                   {formState.isSubmitting ? "Traitement en cours..." : "Soumettre ma pré-inscription"}

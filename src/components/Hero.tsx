@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Button from './ui/Button';
+import { Button } from './ui/button';
 
 const Hero = () => {
   return (
@@ -23,7 +23,7 @@ const Hero = () => {
                 vous propose une formation d'excellence adaptée aux besoins du marché.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button variant="primary" size="lg">
+                <Button variant="default" size="lg">
                   Pré-inscription
                 </Button>
                 <Button variant="outline" size="lg">
