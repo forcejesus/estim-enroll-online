@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from './ui/button';
 import {
   Dialog,
@@ -24,32 +24,37 @@ const TrackCard: React.FC<TrackCardProps> = ({ title, description, icon, careers
       {/* Card header with decorative accent */}
       <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-estim-green to-estim-gold"></div>
       
-      <div className="p-7">
+      <div className="p-5">
         {/* Icon with animated background */}
-        <div className="mb-5 rounded-full p-3 inline-block bg-estim-green/10 text-estim-green group-hover:bg-estim-green group-hover:text-white transition-colors duration-300">
-          <div className="text-2xl">
+        <div className="mb-4 rounded-full p-2 inline-block bg-estim-green/10 text-estim-green group-hover:bg-estim-green group-hover:text-white transition-colors duration-300">
+          <div className="text-xl">
             {icon}
           </div>
         </div>
         
         {/* Title with hover effect */}
-        <h3 className="text-xl font-bold mb-3 group-hover:text-estim-green transition-colors">{title}</h3>
+        <h3 className="text-lg font-bold mb-2 group-hover:text-estim-green transition-colors">{title}</h3>
         
         {/* Description */}
-        <p className="text-muted-foreground mb-6 line-clamp-3">{description}</p>
+        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{description}</p>
         
-        {/* Careers tags */}
-        <div className="mb-6">
-          <h4 className="font-medium text-sm uppercase tracking-wider text-muted-foreground mb-3">Débouchés</h4>
-          <div className="flex flex-wrap gap-2">
-            {careers.map((career, index) => (
+        {/* Careers tags - limited to 2 on mobile */}
+        <div className="mb-4">
+          <h4 className="font-medium text-xs uppercase tracking-wider text-muted-foreground mb-2">Débouchés</h4>
+          <div className="flex flex-wrap gap-1">
+            {careers.slice(0, 2).map((career, index) => (
               <span 
                 key={index} 
-                className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-estim-green/20 to-estim-gold/20 text-estim-darkGreen"
+                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-estim-green/20 to-estim-gold/20 text-estim-darkGreen"
               >
                 {career}
               </span>
             ))}
+            {careers.length > 2 && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600">
+                +{careers.length - 2}
+              </span>
+            )}
           </div>
         </div>
         
@@ -59,10 +64,10 @@ const TrackCard: React.FC<TrackCardProps> = ({ title, description, icon, careers
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full border-estim-green text-estim-green hover:bg-estim-green hover:text-white group-hover:shadow-md transition-all"
+              className="w-full border-estim-green text-estim-green hover:bg-estim-green hover:text-white group-hover:shadow-md transition-all text-sm"
             >
               <span>En savoir plus</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </Button>

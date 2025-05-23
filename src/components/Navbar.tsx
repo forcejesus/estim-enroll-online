@@ -6,7 +6,6 @@ import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,104 +20,19 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   return (
     <header
       className={`fixed w-full top-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+        isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-3'
       }`}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-center">
         <Link to="/" className="flex items-center">
           <div className="h-10 w-10 mr-2 rounded-full bg-estim-green flex items-center justify-center">
             <span className="text-white font-bold">E</span>
           </div>
           <span className="font-bold text-xl text-estim-green">ESTIM</span>
         </Link>
-
-        {/* Simplified desktop navigation - only tracks */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <ScrollLink to="tracks" smooth={true} duration={500} className="nav-link hover:text-estim-green transition-colors cursor-pointer">
-            Filières
-          </ScrollLink>
-        </nav>
-
-        <div className="hidden md:flex items-center space-x-3">
-          <ScrollLink to="register" smooth={true} duration={500}>
-            <Button variant="outline" size="default">
-              Pré-inscription
-            </Button>
-          </ScrollLink>
-          <Button 
-            variant="default" 
-            size="default" 
-            id="complete-registration-dialog"
-            onClick={() => document.getElementById('complete-registration-trigger')?.click()}
-          >
-            Inscription complète
-          </Button>
-        </div>
-
-        {/* Mobile menu button */}
-        <button 
-          className="md:hidden p-2 focus:outline-none" 
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
-            {isMobileMenuOpen ? (
-              <path d="M18 6L6 18M6 6l12 12" />
-            ) : (
-              <path d="M3 12h18M3 6h18M3 18h18" />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Simplified mobile menu */}
-      <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-white shadow-md`}>
-        <div className="container py-4 flex flex-col space-y-4">
-          <ScrollLink 
-            to="tracks" 
-            smooth={true} 
-            duration={500} 
-            className="block py-2 hover:text-estim-green transition-colors cursor-pointer" 
-            onClick={toggleMobileMenu}
-          >
-            Filières
-          </ScrollLink>
-          <div className="grid grid-cols-1 gap-3 pt-2">
-            <ScrollLink to="register" smooth={true} duration={500} onClick={toggleMobileMenu}>
-              <Button variant="outline" size="default" className="w-full">
-                Pré-inscription
-              </Button>
-            </ScrollLink>
-            <Button 
-              variant="default" 
-              size="default" 
-              className="w-full"
-              onClick={() => {
-                document.getElementById('complete-registration-trigger')?.click();
-                toggleMobileMenu();
-              }}
-            >
-              Inscription complète
-            </Button>
-          </div>
-        </div>
       </div>
     </header>
   );

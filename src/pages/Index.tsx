@@ -5,7 +5,6 @@ import Hero from '@/components/Hero';
 import Partners from '@/components/Partners';
 import Tracks from '@/components/Tracks';
 import PreRegistrationForm from '@/components/PreRegistrationForm';
-import Footer from '@/components/Footer';
 import CompleteRegistrationDialog from '@/components/CompleteRegistrationDialog';
 
 const Index = () => {
@@ -16,10 +15,10 @@ const Index = () => {
         <Hero />
         <Partners />
         <Tracks />
-        <section id="about" className="py-20 bg-gradient-to-br from-white via-gray-50 to-white">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold font-heading mb-6">À propos de ESTIM</h2>
+        <section id="about" className="py-12 bg-gradient-to-br from-white via-gray-50 to-white">
+          <div className="container px-4">
+            <div className="max-w-lg mx-auto text-center">
+              <h2 className="text-2xl md:text-3xl font-bold font-heading mb-4">À propos de ESTIM</h2>
               
               <div className="relative">
                 {/* Decorative elements */}
@@ -27,20 +26,15 @@ const Index = () => {
                 <div className="absolute -bottom-16 -right-10 w-24 h-24 bg-estim-gold/10 rounded-full blur-xl"></div>
                 
                 <div className="relative z-10">
-                  <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 mb-4 leading-relaxed">
                     L'École Supérieure de Technologie, d'Innovation et de Management (ESTIM) est une 
                     institution d'enseignement supérieur dédiée à l'excellence académique et à la 
                     formation de professionnels hautement qualifiés.
                   </p>
-                  <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                  <p className="text-sm md:text-base text-gray-700 mb-4 leading-relaxed">
                     Notre mission est de préparer les étudiants aux défis du marché du travail en leur 
                     offrant une formation complète, basée sur les compétences pratiques et les connaissances 
                     théoriques nécessaires à leur réussite professionnelle.
-                  </p>
-                  <p className="text-lg text-gray-700 leading-relaxed">
-                    ESTIM se distingue par ses partenariats industriels solides, son corps professoral 
-                    expérimenté et ses programmes académiques constamment mis à jour pour répondre aux 
-                    exigences du monde professionnel.
                   </p>
                 </div>
               </div>
@@ -48,8 +42,8 @@ const Index = () => {
           </div>
         </section>
         <PreRegistrationForm />
+        <div className="h-10"></div> {/* Bottom spacing */}
       </main>
-      <Footer />
       <CompleteRegistrationDialog />
     </div>
   );
