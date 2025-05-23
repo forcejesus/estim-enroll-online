@@ -1,8 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from './ui/button';
-import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,10 +26,10 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-center">
         <Link to="/" className="flex items-center">
-          <div className="h-10 w-10 mr-2 rounded-full bg-estim-green flex items-center justify-center">
-            <span className="text-white font-bold">E</span>
+          <div className="h-8 w-8 mr-2 rounded-full bg-estim-green flex items-center justify-center">
+            <span className="text-white font-bold text-sm">E</span>
           </div>
-          <span className="font-bold text-xl text-estim-green">ESTIM</span>
+          <span className="font-bold text-lg text-estim-green">ESTIM</span>
         </Link>
       </div>
     </header>
