@@ -1,6 +1,15 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from './ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 
 interface TrackCardProps {
   title: string;
@@ -44,17 +53,58 @@ const TrackCard: React.FC<TrackCardProps> = ({ title, description, icon, careers
           </div>
         </div>
         
-        {/* Button with animation */}
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="w-full border-estim-green text-estim-green hover:bg-estim-green hover:text-white group-hover:shadow-md transition-all"
-        >
-          <span>En savoir plus</span>
-          <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-          </svg>
-        </Button>
+        {/* Dialog for "En savoir plus" */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full border-estim-green text-estim-green hover:bg-estim-green hover:text-white group-hover:shadow-md transition-all"
+            >
+              <span>En savoir plus</span>
+              <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription>
+                Formation professionnelle ESTIM
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <p className="text-gray-700">{description}</p>
+              <div>
+                <h4 className="font-medium mb-2">Débouchés professionnels:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  {careers.map((career, index) => (
+                    <li key={index}>{career}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">Compétences acquises:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Connaissances techniques spécialisées</li>
+                  <li>Compétences pratiques professionnelles</li>
+                  <li>Capacité d'analyse et de résolution de problèmes</li>
+                </ul>
+              </div>
+            </div>
+            <DialogFooter className="sm:justify-center">
+              <Button 
+                type="button" 
+                variant="default" 
+                className="w-full sm:w-auto"
+                onClick={() => document.getElementById('complete-registration-trigger')?.click()}
+              >
+                S'inscrire à cette formation
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

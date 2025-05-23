@@ -39,20 +39,11 @@ const Navbar = () => {
           <span className="font-bold text-xl text-estim-green">ESTIM</span>
         </Link>
 
-        {/* Desktop navigation */}
+        {/* Simplified desktop navigation - only tracks */}
         <nav className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="nav-link hover:text-estim-green transition-colors">
-            Accueil
-          </Link>
-          <Link to="#tracks" className="nav-link hover:text-estim-green transition-colors">
+          <ScrollLink to="tracks" smooth={true} duration={500} className="nav-link hover:text-estim-green transition-colors cursor-pointer">
             Filières
-          </Link>
-          <Link to="#about" className="nav-link hover:text-estim-green transition-colors">
-            À propos
-          </Link>
-          <Link to="#contact" className="nav-link hover:text-estim-green transition-colors">
-            Contact
-          </Link>
+          </ScrollLink>
         </nav>
 
         <div className="hidden md:flex items-center space-x-3">
@@ -97,21 +88,18 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Simplified mobile menu */}
       <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-white shadow-md`}>
         <div className="container py-4 flex flex-col space-y-4">
-          <Link to="/" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
-            Accueil
-          </Link>
-          <Link to="#tracks" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
+          <ScrollLink 
+            to="tracks" 
+            smooth={true} 
+            duration={500} 
+            className="block py-2 hover:text-estim-green transition-colors cursor-pointer" 
+            onClick={toggleMobileMenu}
+          >
             Filières
-          </Link>
-          <Link to="#about" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
-            À propos
-          </Link>
-          <Link to="#contact" className="block py-2 hover:text-estim-green transition-colors" onClick={toggleMobileMenu}>
-            Contact
-          </Link>
+          </ScrollLink>
           <div className="grid grid-cols-1 gap-3 pt-2">
             <ScrollLink to="register" smooth={true} duration={500} onClick={toggleMobileMenu}>
               <Button variant="outline" size="default" className="w-full">
