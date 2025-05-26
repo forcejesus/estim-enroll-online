@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Tracks from '@/components/Tracks';
 import { Award, Target, Users, Globe } from 'lucide-react';
@@ -8,7 +7,6 @@ import { Award, Target, Users, Globe } from 'lucide-react';
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
       <main className="flex-grow">
         <Hero />
         <Tracks />
@@ -48,33 +46,33 @@ const Index = () => {
               </div>
 
               {/* Features Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 gap-6">
                 <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green mb-4">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green mb-4 mx-auto">
                     <Target className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold mb-3 text-gray-800">Excellence Académique</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-bold mb-3 text-gray-800 text-center">Excellence Académique</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed text-center">
                     Formation de haute qualité dispensée par des experts reconnus dans leurs domaines respectifs.
                   </p>
                 </div>
 
                 <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-gold/20 text-estim-gold mb-4">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-gold/20 text-estim-gold mb-4 mx-auto">
                     <Users className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold mb-3 text-gray-800">Accompagnement Personnalisé</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-bold mb-3 text-gray-800 text-center">Accompagnement Personnalisé</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed text-center">
                     Suivi individualisé de chaque étudiant pour garantir sa réussite académique et professionnelle.
                   </p>
                 </div>
 
                 <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green mb-4">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green mb-4 mx-auto">
                     <Globe className="w-6 h-6" />
                   </div>
-                  <h3 className="text-lg font-bold mb-3 text-gray-800">Ouverture sur le Monde</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <h3 className="text-lg font-bold mb-3 text-gray-800 text-center">Ouverture sur le Monde</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed text-center">
                     Formations adaptées aux standards internationaux et aux exigences du marché global.
                   </p>
                 </div>

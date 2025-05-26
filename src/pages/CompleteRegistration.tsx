@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, User, Mail, Phone, GraduationCap, FileText, MapPin, Calendar } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CompleteRegistration = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     // Personal Info
@@ -64,17 +65,8 @@ const CompleteRegistration = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormData(prev => ({ ...prev, isSubmitting: true }));
-    
-    setTimeout(() => {
-      toast({
-        title: "Inscription complète réussie",
-        description: "Votre dossier a été soumis avec succès. Vous recevrez une confirmation par email.",
-      });
-      setFormData(prev => ({ ...prev, isSubmitting: false }));
-    }, 2000);
+  const goToPreview = () => {
+    navigate('/complete-registration-preview', { state: { formData } });
   };
 
   const renderStep = () => {
@@ -84,37 +76,35 @@ const CompleteRegistration = () => {
           <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Informations personnelles</h3>
             
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Prénom</label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    name="firstName"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    placeholder="Votre prénom"
-                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                  />
-                </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Prénom</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  name="firstName"
+                  type="text"
+                  required
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Votre prénom"
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+                />
               </div>
-              
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Nom</label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    name="lastName"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    placeholder="Votre nom"
-                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                  />
-                </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Nom</label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  name="lastName"
+                  type="text"
+                  required
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Votre nom"
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+                />
               </div>
             </div>
 
@@ -150,36 +140,34 @@ const CompleteRegistration = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Date de naissance</label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    name="birthDate"
-                    type="date"
-                    required
-                    value={formData.birthDate}
-                    onChange={handleChange}
-                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                  />
-                </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Date de naissance</label>
+              <div className="relative">
+                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  name="birthDate"
+                  type="date"
+                  required
+                  value={formData.birthDate}
+                  onChange={handleChange}
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+                />
               </div>
-              
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Lieu de naissance</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    name="birthPlace"
-                    type="text"
-                    required
-                    value={formData.birthPlace}
-                    onChange={handleChange}
-                    placeholder="Ville"
-                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                  />
-                </div>
+            </div>
+            
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Lieu de naissance</label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <input
+                  name="birthPlace"
+                  type="text"
+                  required
+                  value={formData.birthPlace}
+                  onChange={handleChange}
+                  placeholder="Ville"
+                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+                />
               </div>
             </div>
           </div>
@@ -231,34 +219,32 @@ const CompleteRegistration = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Année d'obtention</label>
-                <input
-                  name="graduationYear"
-                  type="number"
-                  min="1990"
-                  max="2025"
-                  required
-                  value={formData.graduationYear}
-                  onChange={handleChange}
-                  placeholder="2023"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Établissement</label>
-                <input
-                  name="institution"
-                  type="text"
-                  required
-                  value={formData.institution}
-                  onChange={handleChange}
-                  placeholder="Nom de l'établissement"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
-              </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Année d'obtention</label>
+              <input
+                name="graduationYear"
+                type="number"
+                min="1990"
+                max="2025"
+                required
+                value={formData.graduationYear}
+                onChange={handleChange}
+                placeholder="2023"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Établissement</label>
+              <input
+                name="institution"
+                type="text"
+                required
+                value={formData.institution}
+                onChange={handleChange}
+                placeholder="Nom de l'établissement"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+              />
             </div>
           </div>
         );
@@ -284,32 +270,30 @@ const CompleteRegistration = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Ville</label>
-                <input
-                  name="city"
-                  type="text"
-                  required
-                  value={formData.city}
-                  onChange={handleChange}
-                  placeholder="Votre ville"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="block text-sm font-semibold text-gray-700">Code postal</label>
-                <input
-                  name="postalCode"
-                  type="text"
-                  required
-                  value={formData.postalCode}
-                  onChange={handleChange}
-                  placeholder="12345"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
-              </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Ville</label>
+              <input
+                name="city"
+                type="text"
+                required
+                value={formData.city}
+                onChange={handleChange}
+                placeholder="Votre ville"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-gray-700">Code postal</label>
+              <input
+                name="postalCode"
+                type="text"
+                required
+                value={formData.postalCode}
+                onChange={handleChange}
+                placeholder="12345"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
+              />
             </div>
 
             <div className="space-y-2">
@@ -417,7 +401,7 @@ const CompleteRegistration = () => {
           <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-estim-green/10 to-estim-gold/10 rounded-full blur-3xl"></div>
             
-            <form onSubmit={handleSubmit} className="relative z-10">
+            <div className="relative z-10">
               {renderStep()}
 
               {/* Navigation */}
@@ -444,23 +428,16 @@ const CompleteRegistration = () => {
                     </Button>
                   ) : (
                     <Button
-                      type="submit"
-                      disabled={formData.isSubmitting}
+                      type="button"
+                      onClick={goToPreview}
                       className="px-6 py-2 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
                     >
-                      {formData.isSubmitting ? (
-                        <div className="flex items-center">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                          Finalisation...
-                        </div>
-                      ) : (
-                        "Finaliser l'inscription"
-                      )}
+                      Aperçu avant envoi
                     </Button>
                   )}
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
