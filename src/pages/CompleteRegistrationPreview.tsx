@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -91,10 +90,6 @@ const CompleteRegistrationPreview = () => {
                     <span className="text-gray-600">Lieu de naissance:</span>
                     <span className="font-medium">{formData.birthPlace || 'Non renseigné'}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Nationalité:</span>
-                    <span className="font-medium">{formData.nationality || 'Non renseigné'}</span>
-                  </div>
                 </div>
               </div>
 
@@ -132,10 +127,6 @@ const CompleteRegistrationPreview = () => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Ville:</span>
                     <span className="font-medium">{formData.city || 'Non renseigné'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Code postal:</span>
-                    <span className="font-medium">{formData.postalCode || 'Non renseigné'}</span>
                   </div>
                 </div>
               </div>
