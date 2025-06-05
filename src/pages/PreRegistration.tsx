@@ -2,23 +2,28 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, ArrowLeft, User, Phone, GraduationCap } from 'lucide-react';
+import { Mail, ArrowLeft, User, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import TrackBottomSheet from '@/components/TrackBottomSheet';
 
 const PreRegistration = () => {
   const { toast } = useToast();
   const [formState, setFormState] = useState({
-    firstName: '',
     lastName: '',
+    firstName: '',
     email: '',
     phone: '',
     track: '',
     isSubmitting: false
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleTrackSelect = (track: string) => {
+    setFormState(prev => ({ ...prev, track }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -31,8 +36,8 @@ const PreRegistration = () => {
         description: "Un email de confirmation a été envoyé à votre adresse email.",
       });
       setFormState({
-        firstName: '',
         lastName: '',
+        firstName: '',
         email: '',
         phone: '',
         track: '',
@@ -81,43 +86,41 @@ const PreRegistration = () => {
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-estim-green/5 rounded-full blur-2xl"></div>
             
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
-                    Prénom
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      id="firstName"
-                      name="firstName"
-                      type="text"
-                      required
-                      value={formState.firstName}
-                      onChange={handleChange}
-                      placeholder="Votre prénom"
-                      className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-                    />
-                  </div>
+              <div className="space-y-2">
+                <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
+                  Nom
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    required
+                    placeholder="Votre nom"
+                    value={formState.lastName}
+                    onChange={handleChange}
+                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
+                  />
                 </div>
-                
-                <div className="space-y-2">
-                  <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
-                    Nom
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <input
-                      id="lastName"
-                      name="lastName"
-                      type="text"
-                      required
-                      placeholder="Votre nom"
-                      value={formState.lastName}
-                      onChange={handleChange}
-                      className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-                    />
-                  </div>
+              </div>
+              
+              <div className="space-y-2">
+                <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
+                  Prénom
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    required
+                    value={formState.firstName}
+                    onChange={handleChange}
+                    placeholder="Votre prénom"
+                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
+                  />
                 </div>
               </div>
 
@@ -160,27 +163,15 @@ const PreRegistration = () => {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="track" className="block text-sm font-semibold text-gray-700">
+                <label className="block text-sm font-semibold text-gray-700">
                   Filière souhaitée
                 </label>
-                <div className="relative">
-                  <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select
-                    id="track"
-                    name="track"
-                    required
-                    value={formState.track}
-                    onChange={handleChange}
-                    className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm appearance-none bg-white"
-                  >
-                    <option value="">Sélectionnez une filière</option>
-                    {tracks.map((track, index) => (
-                      <option key={index} value={track}>
-                        {track}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                <TrackBottomSheet
+                  value={formState.track}
+                  onSelect={handleTrackSelect}
+                  tracks={tracks}
+                  placeholder="Sélectionnez une filière"
+                />
               </div>
 
               <div className="pt-4">

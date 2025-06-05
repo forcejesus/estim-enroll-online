@@ -28,40 +28,48 @@ const BirthDateInputs = ({ day, month, year, onChange }: BirthDateInputsProps) =
   return (
     <div className="space-y-2">
       <label className="block text-sm font-semibold text-gray-700">Date de naissance</label>
-      <div className="relative">
-        <Calendar className="absolute left-3 top-3 w-5 h-5 text-gray-400 z-10" />
-        <div className="grid grid-cols-3 gap-3 pl-11">
-          <div>
+      <div className="grid grid-cols-3 gap-3">
+        <div className="space-y-1">
+          <label className="block text-xs text-gray-500 font-medium">Jour</label>
+          <div className="relative">
             <input
               type="number"
               min="1"
               max="31"
-              placeholder="Jour"
+              placeholder="01"
               value={day}
               onChange={(e) => onChange('birthDay', e.target.value)}
               className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm text-center"
             />
           </div>
-          <div>
+        </div>
+        
+        <div className="space-y-1">
+          <label className="block text-xs text-gray-500 font-medium">Mois</label>
+          <div className="relative">
             <select
               value={month}
               onChange={(e) => onChange('birthMonth', e.target.value)}
-              className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white"
+              className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white text-center"
             >
-              <option value="">Mois</option>
+              <option value="">--</option>
               {months.map((m) => (
                 <option key={m.value} value={m.value}>
-                  {m.label}
+                  {m.value}
                 </option>
               ))}
             </select>
           </div>
-          <div>
+        </div>
+        
+        <div className="space-y-1">
+          <label className="block text-xs text-gray-500 font-medium">Année</label>
+          <div className="relative">
             <input
               type="number"
               min="1950"
               max="2010"
-              placeholder="Année"
+              placeholder="1990"
               value={year}
               onChange={(e) => onChange('birthYear', e.target.value)}
               className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm text-center"

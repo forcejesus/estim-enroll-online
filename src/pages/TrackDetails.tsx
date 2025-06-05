@@ -12,8 +12,6 @@ const TrackDetails = () => {
     'gestion-de-projets': {
       title: 'Gestion de Projets',
       description: 'Formation spécialisée dans la gestion et le pilotage de projets dans différents secteurs d\'activité.',
-      duration: '2 ans',
-      level: 'Bac+2',
       careers: [
         'Chef de projet',
         'Assistant chef de projet',
@@ -29,21 +27,11 @@ const TrackDetails = () => {
         'Outils de gestion de projet',
         'Analyse et reporting',
         'Gestion budgétaire'
-      ],
-      program: [
-        'Méthodologies de gestion de projet',
-        'Outils informatiques spécialisés',
-        'Management d\'équipe',
-        'Gestion budgétaire et financière',
-        'Communication professionnelle',
-        'Stage en entreprise'
       ]
     },
     'genie-informatique': {
       title: 'Génie Informatique',
       description: 'Formation complète en développement logiciel, systèmes et réseaux informatiques.',
-      duration: '3 ans',
-      level: 'Bac+3',
       careers: [
         'Développeur logiciel',
         'Administrateur système',
@@ -59,14 +47,6 @@ const TrackDetails = () => {
         'Réseaux et sécurité',
         'Base de données',
         'Architecture logicielle'
-      ],
-      program: [
-        'Algorithmes et structures de données',
-        'Développement web et mobile',
-        'Systèmes d\'exploitation',
-        'Réseaux et télécommunications',
-        'Sécurité informatique',
-        'Projet de fin d\'études'
       ]
     }
     // Ajoutez d'autres filières selon les besoins
@@ -92,7 +72,7 @@ const TrackDetails = () => {
               </div>
               <h1 className="text-2xl font-bold mb-2">{track.title}</h1>
               <p className="text-gray-600 text-sm">
-                Formation {track.level} - Durée {track.duration}
+                Formation de 3 ans - Niveau requis : BAC
               </p>
             </div>
           </div>
@@ -116,29 +96,16 @@ const TrackDetails = () => {
                   <Clock className="w-5 h-5 text-estim-green mr-2" />
                   <h3 className="font-semibold text-gray-800">Durée</h3>
                 </div>
-                <p className="text-gray-600">{track.duration}</p>
+                <p className="text-gray-600">3 ans</p>
               </div>
               
               <div className="bg-white rounded-xl p-4 shadow-lg">
                 <div className="flex items-center mb-3">
                   <Target className="w-5 h-5 text-estim-gold mr-2" />
-                  <h3 className="font-semibold text-gray-800">Niveau</h3>
+                  <h3 className="font-semibold text-gray-800">Niveau requis</h3>
                 </div>
-                <p className="text-gray-600">{track.level}</p>
+                <p className="text-gray-600">BAC</p>
               </div>
-            </div>
-
-            {/* Program */}
-            <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h2 className="text-lg font-semibold text-gray-800 mb-4">Programme de formation</h2>
-              <ul className="space-y-3">
-                {track.program.map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="w-2 h-2 bg-estim-green rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                    <span className="text-gray-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* Skills */}
