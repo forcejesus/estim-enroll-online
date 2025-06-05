@@ -49,8 +49,8 @@ const PreRegistration = () => {
       if (response.ok) {
         const result = await response.json();
         toast({
-          title: "Pré-inscription réussie",
-          description: `Votre pré-inscription a été enregistrée avec succès. ID: ${result.id}`,
+          title: "✅ Pré-inscription confirmée !",
+          description: "Félicitations ! Votre demande a été enregistrée avec succès. Vous recevrez bientôt un email de confirmation avec les prochaines étapes.",
         });
         setFormState({
           lastName: '',
@@ -65,8 +65,8 @@ const PreRegistration = () => {
       }
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi de votre pré-inscription. Veuillez réessayer.",
+        title: "❌ Erreur de soumission",
+        description: "Nous n'avons pas pu traiter votre pré-inscription. Vérifiez votre connexion et réessayez dans quelques instants.",
         variant: "destructive"
       });
       setFormState(prev => ({ ...prev, isSubmitting: false }));

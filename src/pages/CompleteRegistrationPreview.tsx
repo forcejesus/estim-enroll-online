@@ -44,8 +44,8 @@ const CompleteRegistrationPreview = () => {
       if (response.ok) {
         const result = await response.json();
         toast({
-          title: "Inscription réussie",
-          description: `Votre inscription complète a été enregistrée avec succès. ID: ${result.id}`,
+          title: "🎉 Inscription réussie !",
+          description: "Bravo ! Votre dossier d'inscription complet a été soumis avec succès. Notre équipe d'admission l'examinera et vous contactera sous 48h.",
         });
         navigate('/');
       } else {
@@ -53,8 +53,8 @@ const CompleteRegistrationPreview = () => {
       }
     } catch (error) {
       toast({
-        title: "Erreur",
-        description: "Une erreur est survenue lors de l'envoi de votre inscription. Veuillez réessayer.",
+        title: "❌ Erreur d'inscription",
+        description: "Impossible de finaliser votre inscription. Vérifiez vos informations et votre connexion, puis réessayez.",
         variant: "destructive"
       });
     } finally {
