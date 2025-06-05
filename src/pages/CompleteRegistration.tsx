@@ -172,10 +172,7 @@ const CompleteRegistration = () => {
               <input name="city" type="text" required value={formData.city} onChange={handleChange} placeholder="Votre ville" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
             </div>
             
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Code postal</label>
-              <input name="postalCode" type="text" required value={formData.postalCode} onChange={handleChange} placeholder="12345" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
-            </div>
+            
 
             
           </div>;
