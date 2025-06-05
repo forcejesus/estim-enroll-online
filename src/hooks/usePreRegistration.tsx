@@ -51,8 +51,17 @@ export const usePreRegistration = () => {
 
       if (response.ok) {
         toast({
-          title: "✅ Pré-inscription confirmée !",
-          description: "Félicitations ! Votre demande a été enregistrée avec succès. Vous recevrez bientôt un email de confirmation avec les prochaines étapes.",
+          title: "🎉 Félicitations !",
+          description: (
+            <div className="space-y-2">
+              <p className="font-semibold text-estim-green">Votre pré-inscription a été confirmée avec succès !</p>
+              <p className="text-sm text-gray-600">
+                Bienvenue dans la famille ESTIM ! Vous recevrez bientôt un email de confirmation avec toutes les informations nécessaires pour la suite de votre parcours.
+              </p>
+              <p className="text-xs text-estim-gold font-medium">ESTIM je t'estime !</p>
+            </div>
+          ),
+          className: "border-estim-green/30 bg-gradient-to-br from-white to-estim-green/5 shadow-2xl max-w-md",
         });
         setFormState({
           lastName: '',

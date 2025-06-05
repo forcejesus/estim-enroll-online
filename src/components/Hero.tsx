@@ -26,7 +26,7 @@ const Hero = () => {
             <div className="mb-6 inline-block">
               <div className="flex items-center px-4 py-2 text-sm rounded-full bg-gradient-to-r from-estim-green/20 to-estim-gold/20 text-estim-green border border-estim-green/30">
                 <Star className="mr-2 w-4 h-4 fill-current" />
-                <span className="font-semibold">Formation d'Excellence</span>
+                <span className="font-semibold">ESTIM je t'estime !</span>
               </div>
             </div>
 
