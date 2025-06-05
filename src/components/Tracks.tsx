@@ -135,14 +135,19 @@ const Tracks = () => {
   ];
 
   return (
-    <section id="tracks" className="py-8 bg-gray-50">
-      <div className="container px-3">
-        <h2 className="text-xl font-bold font-heading mb-3 text-center">Nos Filières de Formation</h2>
-        <p className="text-sm text-muted-foreground max-w-sm mx-auto text-center mb-6">
-          Découvrez nos programmes de formation d'excellence conçus pour répondre aux besoins du marché.
-        </p>
+    <section id="tracks" className="py-12 bg-gray-50">
+      <div className="container px-4">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold font-heading mb-4 text-gray-800">
+            Nos Filières de Formation
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-estim-green to-estim-gold rounded-full mx-auto mb-4"></div>
+          <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Découvrez nos programmes de formation d'excellence conçus pour répondre aux besoins du marché et vous préparer aux métiers de demain.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
           {tracksData.map((track, index) => (
             <TrackCard
               key={index}
