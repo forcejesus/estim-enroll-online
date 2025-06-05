@@ -1,77 +1,14 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { Mail, User, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TrackBottomSheet from '@/components/TrackBottomSheet';
 import SubmissionLoader from '@/components/SubmissionLoader';
+import PreRegistrationFormFields from '@/components/PreRegistrationFormFields';
+import { usePreRegistration } from '@/hooks/usePreRegistration';
 
 const PreRegistrationForm = () => {
-  const { toast } = useToast();
-  const [formState, setFormState] = useState({
-    lastName: '',
-    firstName: '',
-    email: '',
-    phone: '',
-    track: '',
-    isSubmitting: false
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormState(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleTrackSelect = (track: string) => {
-    setFormState(prev => ({ ...prev, track }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormState(prev => ({ ...prev, isSubmitting: true }));
-    
-    try {
-      const response = await fetch('https://gestion.estim-online.com/api/inscription/preinscriptions/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nom: formState.lastName,
-          prenom: formState.firstName,
-          email: formState.email,
-          telephone: formState.phone,
-          filiere_souhaitee: formState.track
-        })
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        toast({
-          title: "✅ Pré-inscription confirmée !",
-          description: "Félicitations ! Votre demande a été enregistrée avec succès. Vous recevrez bientôt un email de confirmation avec les prochaines étapes.",
-        });
-        setFormState({
-          lastName: '',
-          firstName: '',
-          email: '',
-          phone: '',
-          track: '',
-          isSubmitting: false
-        });
-      } else {
-        throw new Error('Erreur lors de la soumission');
-      }
-    } catch (error) {
-      toast({
-        title: "❌ Erreur de soumission",
-        description: "Nous n'avons pas pu traiter votre pré-inscription. Vérifiez votre connexion et réessayez dans quelques instants.",
-        variant: "destructive"
-      });
-      setFormState(prev => ({ ...prev, isSubmitting: false }));
-    }
-  };
+  const { formState, handleChange, handleTrackSelect, handleSubmit } = usePreRegistration();
 
   const tracks = [
     "Gestion de Projets",
@@ -91,81 +28,10 @@ const PreRegistrationForm = () => {
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-estim-green/5 rounded-full blur-2xl"></div>
       
       <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-        <div className="space-y-2">
-          <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
-            Nom
-          </label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              required
-              placeholder="Votre nom"
-              value={formState.lastName}
-              onChange={handleChange}
-              className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-            />
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">
-            Prénom
-          </label>
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              required
-              value={formState.firstName}
-              onChange={handleChange}
-              placeholder="Votre prénom"
-              className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-            Adresse email
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="votre@email.com"
-              value={formState.email}
-              onChange={handleChange}
-              className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-            />
-          </div>
-        </div>
-        
-        <div className="space-y-2">
-          <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">
-            Numéro de téléphone
-          </label>
-          <div className="relative">
-            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              placeholder="Votre numéro de téléphone"
-              value={formState.phone}
-              onChange={handleChange}
-              className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
-            />
-          </div>
-        </div>
+        <PreRegistrationFormFields 
+          formState={formState}
+          onChange={handleChange}
+        />
 
         <div className="space-y-2">
           <label className="block text-sm font-semibold text-gray-700">
