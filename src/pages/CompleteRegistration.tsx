@@ -1,12 +1,12 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, User, Mail, Phone, GraduationCap, FileText, MapPin, Calendar } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-
 const CompleteRegistration = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
@@ -18,77 +18,59 @@ const CompleteRegistration = () => {
     birthDate: '',
     birthPlace: '',
     nationality: '',
-    
     // Education
     lastDiploma: '',
     graduationYear: '',
     institution: '',
     track: '',
-    
     // Address
     address: '',
     city: '',
     postalCode: '',
-    
     // Additional
     motivation: '',
     hasComputer: '',
     isSubmitting: false
   });
-
-  const tracks = [
-    "Gestion de Projets",
-    "Génie Informatique", 
-    "Maintenance Industrielle",
-    "Électricité Industrielle",
-    "Langue et Affaires",
-    "Secrétariat de Direction",
-    "Qualité, Sécurité et Environnement",
-    "Ressources Humaines",
-    "Comptabilité et Gestion",
-  ];
-
+  const tracks = ["Gestion de Projets", "Génie Informatique", "Maintenance Industrielle", "Électricité Industrielle", "Langue et Affaires", "Secrétariat de Direction", "Qualité, Sécurité et Environnement", "Ressources Humaines", "Comptabilité et Gestion"];
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
-
   const handleNext = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
-
   const handlePrev = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
     }
   };
-
   const goToPreview = () => {
-    navigate('/complete-registration-preview', { state: { formData } });
+    navigate('/complete-registration-preview', {
+      state: {
+        formData
+      }
+    });
   };
-
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Informations personnelles</h3>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Prénom</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="firstName"
-                  type="text"
-                  required
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="Votre prénom"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="firstName" type="text" required value={formData.firstName} onChange={handleChange} placeholder="Votre prénom" className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
             
@@ -96,15 +78,7 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Nom</label>
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="lastName"
-                  type="text"
-                  required
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Votre nom"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="lastName" type="text" required value={formData.lastName} onChange={handleChange} placeholder="Votre nom" className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
 
@@ -112,15 +86,7 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="email" type="email" required value={formData.email} onChange={handleChange} placeholder="votre@email.com" className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
 
@@ -128,15 +94,7 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Téléphone</label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="phone"
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Votre numéro"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="phone" type="tel" required value={formData.phone} onChange={handleChange} placeholder="Votre numéro" className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
 
@@ -144,14 +102,7 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Date de naissance</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="birthDate"
-                  type="date"
-                  required
-                  value={formData.birthDate}
-                  onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="birthDate" type="date" required value={formData.birthDate} onChange={handleChange} className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
             
@@ -159,40 +110,21 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Lieu de naissance</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="birthPlace"
-                  type="text"
-                  required
-                  value={formData.birthPlace}
-                  onChange={handleChange}
-                  placeholder="Ville"
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-                />
+                <input name="birthPlace" type="text" required value={formData.birthPlace} onChange={handleChange} placeholder="Ville" className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
               </div>
             </div>
-          </div>
-        );
-
+          </div>;
       case 2:
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Formation et filière</h3>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Filière souhaitée</label>
               <div className="relative">
                 <GraduationCap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <select
-                  name="track"
-                  required
-                  value={formData.track}
-                  onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white"
-                >
+                <select name="track" required value={formData.track} onChange={handleChange} className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white">
                   <option value="">Choisissez une filière</option>
-                  {tracks.map((track, index) => (
-                    <option key={index} value={track}>{track}</option>
-                  ))}
+                  {tracks.map((track, index) => <option key={index} value={track}>{track}</option>)}
                 </select>
               </div>
             </div>
@@ -201,13 +133,7 @@ const CompleteRegistration = () => {
               <label className="block text-sm font-semibold text-gray-700">Dernier diplôme obtenu</label>
               <div className="relative">
                 <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <select
-                  name="lastDiploma"
-                  required
-                  value={formData.lastDiploma}
-                  onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white"
-                >
+                <select name="lastDiploma" required value={formData.lastDiploma} onChange={handleChange} className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white">
                   <option value="">Sélectionnez</option>
                   <option value="Baccalauréat">Baccalauréat</option>
                   <option value="BTS">BTS</option>
@@ -221,138 +147,61 @@ const CompleteRegistration = () => {
 
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Année d'obtention</label>
-              <input
-                name="graduationYear"
-                type="number"
-                min="1990"
-                max="2025"
-                required
-                value={formData.graduationYear}
-                onChange={handleChange}
-                placeholder="2023"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-              />
+              <input name="graduationYear" type="number" min="1990" max="2025" required value={formData.graduationYear} onChange={handleChange} placeholder="2023" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
             </div>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Établissement</label>
-              <input
-                name="institution"
-                type="text"
-                required
-                value={formData.institution}
-                onChange={handleChange}
-                placeholder="Nom de l'établissement"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-              />
+              <input name="institution" type="text" required value={formData.institution} onChange={handleChange} placeholder="Nom de l'établissement" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
             </div>
-          </div>
-        );
-
+          </div>;
       case 3:
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Adresse et contact</h3>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Adresse complète</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                <textarea
-                  name="address"
-                  required
-                  value={formData.address}
-                  onChange={handleChange}
-                  placeholder="Votre adresse complète"
-                  rows={3}
-                  className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm resize-none"
-                />
+                <textarea name="address" required value={formData.address} onChange={handleChange} placeholder="Votre adresse complète" rows={3} className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm resize-none" />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Ville</label>
-              <input
-                name="city"
-                type="text"
-                required
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="Votre ville"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-              />
+              <input name="city" type="text" required value={formData.city} onChange={handleChange} placeholder="Votre ville" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
             </div>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Code postal</label>
-              <input
-                name="postalCode"
-                type="text"
-                required
-                value={formData.postalCode}
-                onChange={handleChange}
-                placeholder="12345"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-              />
+              <input name="postalCode" type="text" required value={formData.postalCode} onChange={handleChange} placeholder="12345" className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm" />
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Nationalité</label>
-              <input
-                name="nationality"
-                type="text"
-                required
-                value={formData.nationality}
-                onChange={handleChange}
-                placeholder="Votre nationalité"
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm"
-              />
-            </div>
-          </div>
-        );
-
+            
+          </div>;
       case 4:
-        return (
-          <div className="space-y-6">
+        return <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Finalisation</h3>
             
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Motivation</label>
-              <textarea
-                name="motivation"
-                required
-                value={formData.motivation}
-                onChange={handleChange}
-                placeholder="Pourquoi souhaitez-vous intégrer cette formation ?"
-                rows={4}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm resize-none"
-              />
+              <textarea name="motivation" required value={formData.motivation} onChange={handleChange} placeholder="Pourquoi souhaitez-vous intégrer cette formation ?" rows={4} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm resize-none" />
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-semibold text-gray-700">Disposez-vous d'un ordinateur ?</label>
-              <select
-                name="hasComputer"
-                required
-                value={formData.hasComputer}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white"
-              >
+              <select name="hasComputer" required value={formData.hasComputer} onChange={handleChange} className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white">
                 <option value="">Sélectionnez</option>
                 <option value="Oui">Oui</option>
                 <option value="Non">Non</option>
               </select>
             </div>
-          </div>
-        );
-
+          </div>;
       default:
         return null;
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5">
+  return <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5">
       <div className="container px-4 py-8">
         <div className="max-w-md mx-auto">
           {/* Header */}
@@ -376,24 +225,14 @@ const CompleteRegistration = () => {
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-2">
-              {[1, 2, 3, 4].map((step) => (
-                <div
-                  key={step}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
-                    step <= currentStep
-                      ? 'bg-estim-green text-white'
-                      : 'bg-gray-200 text-gray-400'
-                  }`}
-                >
+              {[1, 2, 3, 4].map(step => <div key={step} className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${step <= currentStep ? 'bg-estim-green text-white' : 'bg-gray-200 text-gray-400'}`}>
                   {step}
-                </div>
-              ))}
+                </div>)}
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-gradient-to-r from-estim-green to-estim-gold h-2 rounded-full transition-all duration-500"
-                style={{ width: `${(currentStep / 4) * 100}%` }}
-              ></div>
+              <div className="bg-gradient-to-r from-estim-green to-estim-gold h-2 rounded-full transition-all duration-500" style={{
+              width: `${currentStep / 4 * 100}%`
+            }}></div>
             </div>
           </div>
 
@@ -406,43 +245,22 @@ const CompleteRegistration = () => {
 
               {/* Navigation */}
               <div className="flex justify-between mt-8 pt-6 border-t border-gray-100">
-                {currentStep > 1 && (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handlePrev}
-                    className="px-6 py-2 border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white transition-all"
-                  >
+                {currentStep > 1 && <Button type="button" variant="outline" onClick={handlePrev} className="px-6 py-2 border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white transition-all">
                     Précédent
-                  </Button>
-                )}
+                  </Button>}
                 
                 <div className="ml-auto">
-                  {currentStep < 4 ? (
-                    <Button
-                      type="button"
-                      onClick={handleNext}
-                      className="px-6 py-2 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
-                    >
+                  {currentStep < 4 ? <Button type="button" onClick={handleNext} className="px-6 py-2 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all">
                       Suivant
-                    </Button>
-                  ) : (
-                    <Button
-                      type="button"
-                      onClick={goToPreview}
-                      className="px-6 py-2 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
-                    >
+                    </Button> : <Button type="button" onClick={goToPreview} className="px-6 py-2 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all">
                       Aperçu avant envoi
-                    </Button>
-                  )}
+                    </Button>}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default CompleteRegistration;
