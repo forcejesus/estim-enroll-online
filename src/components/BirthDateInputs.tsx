@@ -6,7 +6,7 @@ interface BirthDateInputsProps {
   day: string;
   month: string;
   year: string;
-  onChange: (field: 'day' | 'month' | 'year', value: string) => void;
+  onChange: (field: 'birthDay' | 'birthMonth' | 'birthYear', value: string) => void;
 }
 
 const BirthDateInputs = ({ day, month, year, onChange }: BirthDateInputsProps) => {
@@ -38,14 +38,14 @@ const BirthDateInputs = ({ day, month, year, onChange }: BirthDateInputsProps) =
               max="31"
               placeholder="Jour"
               value={day}
-              onChange={(e) => onChange('day', e.target.value)}
+              onChange={(e) => onChange('birthDay', e.target.value)}
               className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm text-center"
             />
           </div>
           <div>
             <select
               value={month}
-              onChange={(e) => onChange('month', e.target.value)}
+              onChange={(e) => onChange('birthMonth', e.target.value)}
               className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm appearance-none bg-white"
             >
               <option value="">Mois</option>
@@ -63,7 +63,7 @@ const BirthDateInputs = ({ day, month, year, onChange }: BirthDateInputsProps) =
               max="2010"
               placeholder="Année"
               value={year}
-              onChange={(e) => onChange('year', e.target.value)}
+              onChange={(e) => onChange('birthYear', e.target.value)}
               className="w-full px-3 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-sm text-center"
             />
           </div>
