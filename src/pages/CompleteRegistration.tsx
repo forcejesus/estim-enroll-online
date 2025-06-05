@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -7,6 +6,7 @@ import { ArrowLeft, User, Mail, Phone, GraduationCap, FileText, MapPin } from 'l
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import TrackBottomSheet from '@/components/TrackBottomSheet';
 import BirthDateInputs from '@/components/BirthDateInputs';
+import SubmissionLoader from '@/components/SubmissionLoader';
 
 const CompleteRegistration = () => {
   const { toast } = useToast();
@@ -85,6 +85,58 @@ const CompleteRegistration = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    setFormData(prev => ({ ...prev, isSubmitting: true }));
+    
+    try {
+      const birthDate = formData.birthYear && formData.birthMonth && formData.birthDay 
+        ? `${formData.birthYear}-${formData.birthMonth.padStart(2, '0')}-${formData.birthDay.padStart(2, '0')}`
+        : '';
+
+      const response = await fetch('https://gestion.estim-online.com/api/inscription/dossiers/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nom: formData.lastName,
+          prenom: formData.firstName,
+          email: formData.email,
+          telephone: formData.phone,
+          date_naissance: birthDate,
+          lieu_naissance: formData.birthPlace,
+          filiere_souhaitee: formData.track,
+          dernier_diplome: formData.lastDiploma,
+          annee_obtention: parseInt(formData.graduationYear) || 0,
+          dernier_etablissement: formData.institution,
+          adresse_complete: formData.address,
+          ville: formData.city,
+          motivation: formData.motivation,
+          possede_ordinateur: formData.hasComputer
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        toast({
+          title: "Inscription réussie",
+          description: `Votre inscription complète a été enregistrée avec succès. ID: ${result.id}`,
+        });
+        navigate('/');
+      } else {
+        throw new Error('Erreur lors de la soumission');
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre inscription. Veuillez réessayer.",
+        variant: "destructive"
+      });
+    } finally {
+      setFormData(prev => ({ ...prev, isSubmitting: false }));
+    }
+  };
+
   const goToPreview = () => {
     // Construire la date complète pour l'aperçu
     const birthDate = formData.birthYear && formData.birthMonth && formData.birthDay 
@@ -98,7 +150,7 @@ const CompleteRegistration = () => {
     };
     
     navigate('/complete-registration-preview', {
-      state: { formData: finalFormData }
+      state: { formData: finalFormData, onSubmit: handleSubmit }
     });
   };
 
@@ -415,13 +467,28 @@ const CompleteRegistration = () => {
                       Suivant
                     </Button>
                   ) : (
-                    <Button
-                      type="button"
-                      onClick={goToPreview}
-                      className="w-full py-3 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
-                    >
-                      Aperçu avant envoi
-                    </Button>
+                    <div className="space-y-3">
+                      <Button
+                        type="button"
+                        onClick={goToPreview}
+                        variant="outline"
+                        className="w-full py-3 border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white transition-all"
+                      >
+                        Aperçu avant envoi
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={formData.isSubmitting}
+                        className="w-full py-3 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
+                      >
+                        {formData.isSubmitting ? (
+                          <SubmissionLoader message="Envoi de votre inscription..." />
+                        ) : (
+                          "Envoyer l'inscription"
+                        )}
+                      </Button>
+                    </div>
                   )}
                 </div>
               </div>

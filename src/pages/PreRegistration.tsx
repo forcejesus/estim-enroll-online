@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Mail, ArrowLeft, User, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import TrackBottomSheet from '@/components/TrackBottomSheet';
+import SubmissionLoader from '@/components/SubmissionLoader';
 
 const PreRegistration = () => {
   const { toast } = useToast();
@@ -26,24 +27,50 @@ const PreRegistration = () => {
     setFormState(prev => ({ ...prev, track }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormState(prev => ({ ...prev, isSubmitting: true }));
     
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://gestion.estim-online.com/api/inscription/preinscriptions/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nom: formState.lastName,
+          prenom: formState.firstName,
+          email: formState.email,
+          telephone: formState.phone,
+          filiere_souhaitee: formState.track
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        toast({
+          title: "Pré-inscription réussie",
+          description: `Votre pré-inscription a été enregistrée avec succès. ID: ${result.id}`,
+        });
+        setFormState({
+          lastName: '',
+          firstName: '',
+          email: '',
+          phone: '',
+          track: '',
+          isSubmitting: false
+        });
+      } else {
+        throw new Error('Erreur lors de la soumission');
+      }
+    } catch (error) {
       toast({
-        title: "Pré-inscription réussie",
-        description: "Un email de confirmation a été envoyé à votre adresse email.",
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'envoi de votre pré-inscription. Veuillez réessayer.",
+        variant: "destructive"
       });
-      setFormState({
-        lastName: '',
-        firstName: '',
-        email: '',
-        phone: '',
-        track: '',
-        isSubmitting: false
-      });
-    }, 1500);
+      setFormState(prev => ({ ...prev, isSubmitting: false }));
+    }
   };
 
   const tracks = [
@@ -182,10 +209,7 @@ const PreRegistration = () => {
                   disabled={formState.isSubmitting}
                 >
                   {formState.isSubmitting ? (
-                    <div className="flex items-center">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                      Traitement en cours...
-                    </div>
+                    <SubmissionLoader message="Envoi de votre pré-inscription..." />
                   ) : (
                     "Confirmer ma pré-inscription"
                   )}
