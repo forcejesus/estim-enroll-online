@@ -1,98 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, User, GraduationCap, FileText, CheckCircle, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, User, Mail, Phone, GraduationCap, FileText, MapPin } from 'lucide-react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import TrackBottomSheet from '@/components/TrackBottomSheet';
-import BirthDateInputs from '@/components/BirthDateInputs';
-import SubmissionLoader from '@/components/SubmissionLoader';
+
+type Step = 'personal' | 'academic' | 'documents' | 'confirmation';
 
 const CompleteRegistration = () => {
   const { toast } = useToast();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [currentStep, setCurrentStep] = useState(1);
-  
-  // Charger les données existantes si elles sont passées depuis l'aperçu
-  const existingData = location.state?.formData || {};
-  
+  const [currentStep, setCurrentStep] = useState<Step>('personal');
   const [formData, setFormData] = useState({
-    // Personal Info
-    firstName: existingData.firstName || '',
-    lastName: existingData.lastName || '',
-    email: existingData.email || '',
-    phone: existingData.phone || '',
-    birthDay: existingData.birthDay || (existingData.birthDate ? existingData.birthDate.split('-')[2] : ''),
-    birthMonth: existingData.birthMonth || (existingData.birthDate ? existingData.birthDate.split('-')[1] : ''),
-    birthYear: existingData.birthYear || (existingData.birthDate ? existingData.birthDate.split('-')[0] : ''),
-    birthPlace: existingData.birthPlace || '',
-    nationality: existingData.nationality || '',
-    // Education
-    lastDiploma: existingData.lastDiploma || '',
-    graduationYear: existingData.graduationYear || '',
-    institution: existingData.institution || '',
-    track: existingData.track || '',
-    // Address
-    address: existingData.address || '',
-    city: existingData.city || '',
-    // Additional
-    motivation: existingData.motivation || '',
-    hasComputer: existingData.hasComputer === 'Oui' || existingData.hasComputer === true || false,
-    isSubmitting: false
+    // Informations personnelles
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    dateOfBirth: '',
+    address: '',
+    city: '',
+    postalCode: '',
+    
+    // Informations académiques
+    track: '',
+    previousEducation: '',
+    baccalaureateType: '',
+    baccalaureateYear: '',
+    university: '',
+    motivation: '',
+    
+    // Documents
+    photoUploaded: false,
+    baccalaureateUploaded: false,
+    transcriptUploaded: false,
+    idCardUploaded: false,
   });
 
-  const tracks = ["Gestion de Projets", "Génie Informatique", "Maintenance Industrielle", "Électricité Industrielle", "Langue et Affaires", "Secrétariat de Direction", "Qualité, Sécurité et Environnement", "Ressources Humaines", "Comptabilité et Gestion"];
+  const steps = [
+    { id: 'personal', title: 'Informations personnelles', icon: User, completed: false },
+    { id: 'academic', title: 'Parcours académique', icon: GraduationCap, completed: false },
+    { id: 'documents', title: 'Documents', icon: FileText, completed: false },
+    { id: 'confirmation', title: 'Confirmation', icon: CheckCircle, completed: false },
+  ];
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+  const tracks = [
+    'Génie Informatique',
+    'Réseaux et Télécommunications',
+    'Management',
+    'Finance et Comptabilité',
+    'Marketing Digital',
+    'Commerce International',
+    'Génie Civil',
+    'Architecture',
+    'Design Graphique'
+  ];
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleDateChange = (field: 'birthDay' | 'birthMonth' | 'birthYear', value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleTrackSelect = (track: string) => {
-    setFormData(prev => ({
-      ...prev,
-      track
-    }));
-  };
-
-  const handleComputerChange = (checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      hasComputer: checked
-    }));
-  };
-
-  const handleNext = () => {
-    if (currentStep < 4) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+  const isStepCompleted = (step: Step): boolean => {
+    switch (step) {
+      case 'personal':
+        return !!(formData.firstName && formData.lastName && formData.email && formData.phone);
+      case 'academic':
+        return !!(formData.track && formData.baccalaureateType && formData.baccalaureateYear);
+      case 'documents':
+        return formData.photoUploaded && formData.baccalaureateUploaded && formData.transcriptUploaded;
+      case 'confirmation':
+        return true;
+      default:
+        return false;
     }
   };
 
   const handleSubmit = async () => {
-    setFormData(prev => ({ ...prev, isSubmitting: true }));
-    
     try {
-      const birthDate = formData.birthYear && formData.birthMonth && formData.birthDay 
-        ? `${formData.birthYear}-${formData.birthMonth.padStart(2, '0')}-${formData.birthDay.padStart(2, '0')}`
-        : '';
-
       const response = await fetch('https://gestion.estim-online.com/api/inscription/dossiers/', {
         method: 'POST',
         headers: {
@@ -103,394 +90,514 @@ const CompleteRegistration = () => {
           prenom: formData.firstName,
           email: formData.email,
           telephone: formData.phone,
-          date_naissance: birthDate,
-          lieu_naissance: formData.birthPlace,
+          date_naissance: formData.dateOfBirth,
           filiere_souhaitee: formData.track,
-          dernier_diplome: formData.lastDiploma,
-          annee_obtention: parseInt(formData.graduationYear) || 0,
-          dernier_etablissement: formData.institution,
+          dernier_diplome: formData.baccalaureateType,
+          annee_obtention: parseInt(formData.baccalaureateYear) || 0,
+          dernier_etablissement: formData.university,
           adresse_complete: formData.address,
           ville: formData.city,
           motivation: formData.motivation,
-          possede_ordinateur: formData.hasComputer
         })
       });
 
       if (response.ok) {
-        const result = await response.json();
         toast({
-          title: "🎉 Inscription réussie !",
-          description: "Bravo ! Votre dossier d'inscription complet a été soumis avec succès. Notre équipe d'admission l'examinera et vous contactera sous 48h.",
+          title: "🎉 Félicitations !",
+          description: (
+            <div className="space-y-2">
+              <p className="font-semibold text-estim-green">Votre inscription complète a été soumise avec succès !</p>
+              <p className="text-sm text-gray-600">
+                Notre équipe d'admission examinera votre dossier et vous contactera sous 48h pour les prochaines étapes.
+              </p>
+              <p className="text-xs text-estim-gold font-medium">ESTIM je t'estime !</p>
+            </div>
+          ),
+          className: "border-estim-green/30 bg-gradient-to-br from-white to-estim-green/5 shadow-2xl max-w-md",
         });
-        navigate('/');
       } else {
         throw new Error('Erreur lors de la soumission');
       }
     } catch (error) {
       toast({
         title: "❌ Erreur d'inscription",
-        description: "Impossible de finaliser votre inscription. Vérifiez vos informations et votre connexion, puis réessayez.",
+        description: "Impossible de finaliser votre inscription. Vérifiez vos informations et réessayez.",
         variant: "destructive"
       });
-    } finally {
-      setFormData(prev => ({ ...prev, isSubmitting: false }));
     }
   };
 
-  const goToPreview = () => {
-    // Construire la date complète pour l'aperçu
-    const birthDate = formData.birthYear && formData.birthMonth && formData.birthDay 
-      ? `${formData.birthYear}-${formData.birthMonth.padStart(2, '0')}-${formData.birthDay.padStart(2, '0')}`
-      : '';
-    
-    const finalFormData = {
-      ...formData,
-      birthDate,
-      hasComputer: formData.hasComputer ? 'Oui' : 'Non'
-    };
-    
-    navigate('/complete-registration-preview', {
-      state: { formData: finalFormData, onSubmit: handleSubmit }
-    });
+  const renderPersonalInfo = () => (
+    <Card className="glass-effect border-estim-green/20">
+      <CardHeader>
+        <CardTitle className="text-estim-green flex items-center">
+          <User className="mr-2 w-5 h-5" />
+          Informations personnelles
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="firstName">Prénom *</Label>
+            <Input
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              className="mt-1"
+              placeholder="Votre prénom"
+            />
+          </div>
+          <div>
+            <Label htmlFor="lastName">Nom *</Label>
+            <Input
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              className="mt-1"
+              placeholder="Votre nom"
+            />
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="email">Email *</Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className="mt-1"
+              placeholder="votre.email@example.com"
+            />
+          </div>
+          <div>
+            <Label htmlFor="phone">Téléphone *</Label>
+            <Input
+              id="phone"
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              className="mt-1"
+              placeholder="+212 6XX XXX XXX"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label htmlFor="dateOfBirth">Date de naissance</Label>
+          <Input
+            id="dateOfBirth"
+            type="date"
+            value={formData.dateOfBirth}
+            onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="address">Adresse</Label>
+          <Input
+            id="address"
+            value={formData.address}
+            onChange={(e) => handleInputChange('address', e.target.value)}
+            className="mt-1"
+            placeholder="Votre adresse complète"
+          />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="city">Ville</Label>
+            <Input
+              id="city"
+              value={formData.city}
+              onChange={(e) => handleInputChange('city', e.target.value)}
+              className="mt-1"
+              placeholder="Casablanca, Rabat..."
+            />
+          </div>
+          <div>
+            <Label htmlFor="postalCode">Code postal</Label>
+            <Input
+              id="postalCode"
+              value={formData.postalCode}
+              onChange={(e) => handleInputChange('postalCode', e.target.value)}
+              className="mt-1"
+              placeholder="20000"
+            />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const renderAcademicInfo = () => (
+    <Card className="glass-effect border-estim-green/20">
+      <CardHeader>
+        <CardTitle className="text-estim-green flex items-center">
+          <GraduationCap className="mr-2 w-5 h-5" />
+          Parcours académique
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div>
+          <Label htmlFor="track">Filière souhaitée *</Label>
+          <Select value={formData.track} onValueChange={(value) => handleInputChange('track', value)}>
+            <SelectTrigger className="mt-1">
+              <SelectValue placeholder="Choisissez votre filière" />
+            </SelectTrigger>
+            <SelectContent>
+              {tracks.map((track) => (
+                <SelectItem key={track} value={track}>{track}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div>
+          <Label htmlFor="baccalaureateType">Type de baccalauréat *</Label>
+          <Select value={formData.baccalaureateType} onValueChange={(value) => handleInputChange('baccalaureateType', value)}>
+            <SelectTrigger className="mt-1">
+              <SelectValue placeholder="Type de baccalauréat" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="sciences-maths">Sciences Mathématiques</SelectItem>
+              <SelectItem value="sciences-physiques">Sciences Physiques</SelectItem>
+              <SelectItem value="sciences-svt">Sciences de la Vie et de la Terre</SelectItem>
+              <SelectItem value="lettres">Lettres et Sciences Humaines</SelectItem>
+              <SelectItem value="economie">Sciences Économiques</SelectItem>
+              <SelectItem value="technique">Technique</SelectItem>
+              <SelectItem value="autre">Autre</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div>
+          <Label htmlFor="baccalaureateYear">Année d'obtention du baccalauréat *</Label>
+          <Select value={formData.baccalaureateYear} onValueChange={(value) => handleInputChange('baccalaureateYear', value)}>
+            <SelectTrigger className="mt-1">
+              <SelectValue placeholder="Année d'obtention" />
+            </SelectTrigger>
+            <SelectContent>
+              {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i).map(year => (
+                <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div>
+          <Label htmlFor="previousEducation">Formation antérieure (si applicable)</Label>
+          <Input
+            id="previousEducation"
+            value={formData.previousEducation}
+            onChange={(e) => handleInputChange('previousEducation', e.target.value)}
+            className="mt-1"
+            placeholder="DUT, BTS, Licence..."
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="university">Établissement précédent (si applicable)</Label>
+          <Input
+            id="university"
+            value={formData.university}
+            onChange={(e) => handleInputChange('university', e.target.value)}
+            className="mt-1"
+            placeholder="Nom de l'établissement"
+          />
+        </div>
+        
+        <div>
+          <Label htmlFor="motivation">Lettre de motivation</Label>
+          <Textarea
+            id="motivation"
+            value={formData.motivation}
+            onChange={(e) => handleInputChange('motivation', e.target.value)}
+            className="mt-1 min-h-[120px]"
+            placeholder="Pourquoi souhaitez-vous rejoindre ESTIM ? Quels sont vos objectifs professionnels ?"
+          />
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const renderDocuments = () => (
+    <Card className="glass-effect border-estim-green/20">
+      <CardHeader>
+        <CardTitle className="text-estim-green flex items-center">
+          <FileText className="mr-2 w-5 h-5" />
+          Documents requis
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="space-y-4">
+          <div className="p-4 border-2 border-dashed border-estim-green/30 rounded-lg bg-estim-green/5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-gray-800">Photo d'identité *</h4>
+                <p className="text-sm text-gray-600">Format JPG ou PNG, max 2MB</p>
+              </div>
+              <Button 
+                variant="outline" 
+                className="border-estim-green text-estim-green hover:bg-estim-green hover:text-white"
+                onClick={() => handleInputChange('photoUploaded', 'true')}
+              >
+                {formData.photoUploaded ? 'Modifiée ✓' : 'Télécharger'}
+              </Button>
+            </div>
+          </div>
+          
+          <div className="p-4 border-2 border-dashed border-estim-green/30 rounded-lg bg-estim-green/5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-gray-800">Copie du baccalauréat *</h4>
+                <p className="text-sm text-gray-600">Document officiel scanné</p>
+              </div>
+              <Button 
+                variant="outline" 
+                className="border-estim-green text-estim-green hover:bg-estim-green hover:text-white"
+                onClick={() => handleInputChange('baccalaureateUploaded', 'true')}
+              >
+                {formData.baccalaureateUploaded ? 'Téléchargé ✓' : 'Télécharger'}
+              </Button>
+            </div>
+          </div>
+          
+          <div className="p-4 border-2 border-dashed border-estim-green/30 rounded-lg bg-estim-green/5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-gray-800">Relevé de notes *</h4>
+                <p className="text-sm text-gray-600">Derniers relevés de notes obtenus</p>
+              </div>
+              <Button 
+                variant="outline" 
+                className="border-estim-green text-estim-green hover:bg-estim-green hover:text-white"
+                onClick={() => handleInputChange('transcriptUploaded', 'true')}
+              >
+                {formData.transcriptUploaded ? 'Téléchargé ✓' : 'Télécharger'}
+              </Button>
+            </div>
+          </div>
+          
+          <div className="p-4 border-2 border-dashed border-estim-green/30 rounded-lg bg-estim-green/5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="font-semibold text-gray-800">Pièce d'identité</h4>
+                <p className="text-sm text-gray-600">CIN ou passeport (optionnel)</p>
+              </div>
+              <Button 
+                variant="outline" 
+                className="border-estim-green text-estim-green hover:bg-estim-green hover:text-white"
+                onClick={() => handleInputChange('idCardUploaded', 'true')}
+              >
+                {formData.idCardUploaded ? 'Téléchargé ✓' : 'Télécharger'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const renderConfirmation = () => (
+    <Card className="glass-effect border-estim-green/20">
+      <CardHeader>
+        <CardTitle className="text-estim-green flex items-center">
+          <CheckCircle className="mr-2 w-5 h-5" />
+          Confirmation de votre inscription
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="bg-gradient-to-r from-estim-green/10 to-estim-gold/10 p-6 rounded-2xl border border-estim-green/20">
+          <h3 className="text-lg font-bold text-gray-800 mb-4">Récapitulatif de votre demande</h3>
+          
+          <div className="space-y-3 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Nom complet:</span>
+              <span className="font-medium">{formData.firstName} {formData.lastName}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Email:</span>
+              <span className="font-medium">{formData.email}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Filière:</span>
+              <span className="font-medium">{formData.track}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Baccalauréat:</span>
+              <span className="font-medium">{formData.baccalaureateType} ({formData.baccalaureateYear})</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-estim-gold/10 p-6 rounded-2xl border border-estim-gold/20">
+          <h4 className="font-semibold text-gray-800 mb-2">Prochaines étapes</h4>
+          <ul className="text-sm text-gray-600 space-y-2">
+            <li>• Vous recevrez un email de confirmation dans les 24h</li>
+            <li>• Notre équipe examinera votre dossier sous 3-5 jours ouvrables</li>
+            <li>• Vous serez contacté(e) pour un entretien si votre profil correspond</li>
+            <li>• Les résultats d'admission seront communiqués par email</li>
+          </ul>
+        </div>
+        
+        <div className="text-center">
+          <div className="inline-block px-4 py-2 bg-gradient-to-r from-estim-green/20 to-estim-gold/20 rounded-full border border-estim-green/30">
+            <span className="text-estim-green font-semibold text-sm">ESTIM je t'estime !</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 'personal':
+        return renderPersonalInfo();
+      case 'academic':
+        return renderAcademicInfo();
+      case 'documents':
+        return renderDocuments();
+      case 'confirmation':
+        return renderConfirmation();
+      default:
+        return renderPersonalInfo();
+    }
   };
 
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6">Informations personnelles</h3>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Prénom</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="firstName"
-                  type="text"
-                  required
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="Votre prénom"
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Nom</label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="lastName"
-                  type="text"
-                  required
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Votre nom"
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-                />
-              </div>
-            </div>
+  const nextStep = () => {
+    const stepOrder: Step[] = ['personal', 'academic', 'documents', 'confirmation'];
+    const currentIndex = stepOrder.indexOf(currentStep);
+    if (currentIndex < stepOrder.length - 1) {
+      setCurrentStep(stepOrder[currentIndex + 1]);
+    }
+  };
 
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Email</label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="votre@email.com"
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Téléphone</label>
-              <div className="relative">
-                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="phone"
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="Votre numéro"
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-                />
-              </div>
-            </div>
-
-            <BirthDateInputs
-              day={formData.birthDay}
-              month={formData.birthMonth}
-              year={formData.birthYear}
-              onChange={handleDateChange}
-            />
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Lieu de naissance</label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input
-                  name="birthPlace"
-                  type="text"
-                  required
-                  value={formData.birthPlace}
-                  onChange={handleChange}
-                  placeholder="Ville"
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-                />
-              </div>
-            </div>
-          </div>
-        );
-      case 2:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6">Formation et filière</h3>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Filière souhaitée</label>
-              <TrackBottomSheet
-                value={formData.track}
-                onSelect={handleTrackSelect}
-                tracks={tracks}
-                placeholder="Choisissez une filière"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Dernier diplôme obtenu</label>
-              <div className="relative">
-                <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <select
-                  name="lastDiploma"
-                  required
-                  value={formData.lastDiploma}
-                  onChange={handleChange}
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base appearance-none bg-white"
-                >
-                  <option value="">Sélectionnez</option>
-                  <option value="Baccalauréat">Baccalauréat</option>
-                  <option value="BTS">BTS</option>
-                  <option value="DUT">DUT</option>
-                  <option value="License">License</option>
-                  <option value="Master">Master</option>
-                  <option value="Autre">Autre</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Année d'obtention</label>
-              <input
-                name="graduationYear"
-                type="number"
-                min="1990"
-                max="2025"
-                required
-                value={formData.graduationYear}
-                onChange={handleChange}
-                placeholder="2023"
-                className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Établissement</label>
-              <input
-                name="institution"
-                type="text"
-                required
-                value={formData.institution}
-                onChange={handleChange}
-                placeholder="Nom de l'établissement"
-                className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-              />
-            </div>
-          </div>
-        );
-      case 3:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6">Adresse et contact</h3>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Adresse complète</label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
-                <textarea
-                  name="address"
-                  required
-                  value={formData.address}
-                  onChange={handleChange}
-                  placeholder="Votre adresse complète"
-                  rows={3}
-                  className="w-full pl-11 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base resize-none"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Ville</label>
-              <input
-                name="city"
-                type="text"
-                required
-                value={formData.city}
-                onChange={handleChange}
-                placeholder="Votre ville"
-                className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base"
-              />
-            </div>
-          </div>
-        );
-      case 4:
-        return (
-          <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-6">Finalisation</h3>
-            
-            <div className="space-y-2">
-              <label className="block text-sm font-semibold text-gray-700">Motivation</label>
-              <textarea
-                name="motivation"
-                required
-                value={formData.motivation}
-                onChange={handleChange}
-                placeholder="Pourquoi souhaitez-vous intégrer cette formation ?"
-                rows={4}
-                className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all text-base resize-none"
-              />
-            </div>
-
-            <div className="space-y-3">
-              <label className="block text-sm font-semibold text-gray-700">Disposez-vous d'un ordinateur ?</label>
-              <div className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-xl">
-                <Switch
-                  checked={formData.hasComputer}
-                  onCheckedChange={handleComputerChange}
-                  className="data-[state=checked]:bg-estim-green"
-                />
-                <span className="text-sm font-medium text-gray-700">
-                  {formData.hasComputer ? 'Oui, j\'ai un ordinateur' : 'Non, je n\'ai pas d\'ordinateur'}
-                </span>
-              </div>
-            </div>
-          </div>
-        );
-      default:
-        return null;
+  const prevStep = () => {
+    const stepOrder: Step[] = ['personal', 'academic', 'documents', 'confirmation'];
+    const currentIndex = stepOrder.indexOf(currentStep);
+    if (currentIndex > 0) {
+      setCurrentStep(stepOrder[currentIndex - 1]);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5">
       <div className="container px-4 py-8">
-        <div className="max-w-md mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <Link 
-              to="/" 
-              className="inline-flex items-center text-estim-green hover:text-estim-darkGreen mb-6 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              <span className="font-medium">Retour à l'accueil</span>
-            </Link>
-            
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-4">
-                <FileText className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-2xl font-bold mb-2">Inscription complète</h1>
-              <p className="text-gray-600 text-sm">
-                Étape {currentStep} sur 4 - Complétez votre dossier d'inscription
-              </p>
-            </div>
+        {/* Header */}
+        <div className="mb-8">
+          <Link to="/" className="inline-flex items-center text-estim-green hover:text-estim-darkGreen mb-6 transition-colors">
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            <span className="font-medium">Retour à l'accueil</span>
+          </Link>
+          
+          <div className="text-center lg:text-left">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+              Inscription complète à <span className="text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold">ESTIM</span>
+            </h1>
+            <p className="text-gray-600">
+              Complétez votre dossier d'inscription en quelques étapes simples
+            </p>
           </div>
+        </div>
 
-          {/* Progress Bar */}
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-2">
-              {[1, 2, 3, 4].map((step) => (
-                <div
-                  key={step}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
-                    step <= currentStep
-                      ? 'bg-estim-green text-white'
-                      : 'bg-gray-200 text-gray-400'
-                  }`}
-                >
-                  {step}
+        {/* Layout */}
+        <div className="grid lg:grid-cols-4 gap-8">
+          {/* Sidebar - Steps */}
+          <div className="lg:col-span-1">
+            <Card className="glass-effect border-estim-green/20 sticky top-8">
+              <CardHeader>
+                <CardTitle className="text-lg text-estim-green">Étapes d'inscription</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {steps.map((step, index) => {
+                    const StepIcon = step.icon;
+                    const isActive = currentStep === step.id;
+                    const isCompleted = isStepCompleted(step.id as Step);
+                    
+                    return (
+                      <div
+                        key={step.id}
+                        className={`flex items-center space-x-3 p-3 rounded-lg cursor-pointer transition-all ${
+                          isActive
+                            ? 'bg-gradient-to-r from-estim-green/20 to-estim-gold/20 border border-estim-green/30'
+                            : isCompleted
+                            ? 'bg-estim-green/10 border border-estim-green/20'
+                            : 'hover:bg-gray-50 border border-transparent'
+                        }`}
+                        onClick={() => setCurrentStep(step.id as Step)}
+                      >
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          isActive
+                            ? 'bg-estim-green text-white'
+                            : isCompleted
+                            ? 'bg-estim-green text-white'
+                            : 'bg-gray-200 text-gray-500'
+                        }`}>
+                          {isCompleted ? (
+                            <CheckCircle className="w-5 h-5" />
+                          ) : (
+                            <StepIcon className="w-4 h-4" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-sm font-medium ${
+                            isActive || isCompleted ? 'text-estim-green' : 'text-gray-600'
+                          }`}>
+                            {step.title}
+                          </p>
+                        </div>
+                        {(isActive || isCompleted) && (
+                          <ChevronRight className="w-4 h-4 text-estim-green" />
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-gradient-to-r from-estim-green to-estim-gold h-2 rounded-full transition-all duration-500"
-                style={{ width: `${(currentStep / 4) * 100}%` }}
-              ></div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-estim-green/10 to-estim-gold/10 rounded-full blur-3xl"></div>
-            
-            <div className="relative z-10">
-              {renderStep()}
+          {/* Main Content */}
+          <div className="lg:col-span-3">
+            <div className="space-y-8">
+              {renderStepContent()}
 
               {/* Navigation */}
-              <div className="mt-8 pt-6 border-t border-gray-100">
-                <div className="flex flex-col space-y-3">
-                  {currentStep > 1 && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handlePrev}
-                      className="w-full py-3 border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white transition-all"
-                    >
-                      Précédent
-                    </Button>
-                  )}
-                  
-                  {currentStep < 4 ? (
-                    <Button
-                      type="button"
-                      onClick={handleNext}
-                      className="w-full py-3 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
-                    >
-                      Suivant
-                    </Button>
-                  ) : (
-                    <div className="space-y-3">
-                      <Button
-                        type="button"
-                        onClick={goToPreview}
-                        variant="outline"
-                        className="w-full py-3 border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white transition-all"
-                      >
-                        Aperçu avant envoi
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={handleSubmit}
-                        disabled={formData.isSubmitting}
-                        className="w-full py-3 bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white transition-all"
-                      >
-                        {formData.isSubmitting ? (
-                          <SubmissionLoader message="Envoi de votre inscription..." />
-                        ) : (
-                          "Envoyer l'inscription"
-                        )}
-                      </Button>
-                    </div>
-                  )}
+              <div className="flex justify-between items-center">
+                <Button
+                  variant="outline"
+                  onClick={prevStep}
+                  disabled={currentStep === 'personal'}
+                  className="border-estim-green text-estim-green hover:bg-estim-green hover:text-white"
+                >
+                  Précédent
+                </Button>
+
+                <div className="text-center">
+                  <span className="text-sm text-gray-500">
+                    Étape {['personal', 'academic', 'documents', 'confirmation'].indexOf(currentStep) + 1} sur 4
+                  </span>
                 </div>
+
+                {currentStep === 'confirmation' ? (
+                  <Button 
+                    onClick={handleSubmit}
+                    className="bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white"
+                  >
+                    Finaliser l'inscription
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={nextStep}
+                    disabled={!isStepCompleted(currentStep)}
+                    className="bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white"
+                  >
+                    Suivant
+                  </Button>
+                )}
               </div>
             </div>
           </div>
