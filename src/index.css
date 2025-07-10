@@ -22,6 +22,14 @@
     --secondary: 42 92% 63%;
     --secondary-foreground: 25 47% 22%;
 
+    /* ESTIM Custom Design Tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(142 68% 29%), hsl(42 92% 63%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 68% 29% / 0.1), hsl(42 92% 63% / 0.1));
+    --shadow-elegant: 0 20px 40px -12px hsl(142 68% 29% / 0.25);
+    --shadow-glow: 0 0 40px hsl(42 92% 63% / 0.3);
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --border-gradient: linear-gradient(135deg, hsl(142 68% 29% / 0.3), hsl(42 92% 63% / 0.3));
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
@@ -107,4 +115,38 @@
 /* Custom styling for active nav link */
 .nav-link.active {
   @apply text-estim-green font-medium;
+}
+
+/* Modern Animation Classes */
+.hover-lift {
+  @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+}
+
+.gradient-border {
+  position: relative;
+  background: linear-gradient(white, white) padding-box,
+              var(--border-gradient) border-box;
+  border: 2px solid transparent;
+}
+
+.glass-effect {
+  @apply bg-white/80 backdrop-blur-sm border border-white/20;
+}
+
+.floating-animation {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-glow {
+  from { box-shadow: 0 0 20px hsl(142 68% 29% / 0.3); }
+  to { box-shadow: 0 0 40px hsl(142 68% 29% / 0.6), 0 0 60px hsl(42 92% 63% / 0.3); }
 }

@@ -10,8 +10,8 @@ const Index = () => {
       <main className="flex-grow">
         <Hero />
         
-        {/* Stats Section */}
-        <section className="py-12 bg-white">
+        {/* Stats Section - Mobile Only (Hidden on Desktop as they're in Hero) */}
+        <section className="py-12 bg-white lg:hidden">
           <div className="container px-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-estim-green/10 to-estim-gold/10 border border-estim-green/20">
@@ -46,7 +46,7 @@ const Index = () => {
         {/* Why Choose ESTIM Section */}
         <section className="py-16 bg-gradient-to-br from-gray-50 to-estim-green/5">
           <div className="container px-4">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               {/* Section Header */}
               <div className="text-center mb-12">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-6">
@@ -62,7 +62,7 @@ const Index = () => {
               </div>
 
               {/* Features Grid */}
-              <div className="grid grid-cols-1 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                 <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
                   <div className="flex items-start space-x-4">
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green flex-shrink-0">
@@ -112,7 +112,7 @@ const Index = () => {
         {/* About Section */}
         <section id="about" className="py-16 bg-white relative overflow-hidden">
           <div className="container px-4">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-6xl mx-auto">
               {/* Section Header */}
               <div className="text-center mb-12">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-6">
