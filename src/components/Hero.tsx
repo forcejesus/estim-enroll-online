@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { GraduationCap, FileEdit, Users, Star } from 'lucide-react';
-import estimStudents from '@/assets/estim-students.jpg';
+import estimStudents from '/lovable-uploads/b8c9ac9f-37af-4ed0-aeec-4ce8d8acef4d.png';
 
 const Hero = () => {
   return (
@@ -12,7 +12,7 @@ const Hero = () => {
       <div className="hidden md:block absolute inset-0 w-full h-full">
         <img 
           src={estimStudents} 
-          alt="Étudiants ESTIM" 
+          alt="Diplômés ESTIM - Cérémonie de remise des diplômes" 
           className="w-full h-full object-cover opacity-10"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/70"></div>
@@ -22,17 +22,18 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="flex flex-col text-center lg:text-left order-2 lg:order-1">
-            {/* Logo Section */}
+            {/* Logo Section - Plus proéminent */}
             <div className="mb-8">
-              <div className="relative w-24 h-24 md:w-32 md:h-32 lg:w-28 lg:h-28 mx-auto lg:mx-0 mb-6">
-                <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-40 h-40 md:w-48 md:h-48 lg:w-44 lg:h-44 xl:w-52 xl:h-52 mx-auto lg:mx-0 mb-6 pulse-glow">
+                <div className="absolute inset-0 flex items-center justify-center bg-white rounded-3xl shadow-2xl border-4 border-estim-green/20">
                   <img
                     src="/lovable-uploads/7fd02047-10b5-4456-9c21-26291d67a59b.png"
                     alt="ESTIM Logo"
-                    className="w-auto h-full object-contain drop-shadow-lg"
+                    className="w-4/5 h-4/5 object-contain drop-shadow-xl"
                   />
                 </div>
-                <div className="absolute -z-10 inset-0 bg-gradient-to-br from-estim-green/30 to-estim-gold/30 rounded-full blur-2xl animate-pulse"></div>
+                <div className="absolute -z-10 inset-0 bg-gradient-to-br from-estim-green/40 to-estim-gold/40 rounded-3xl blur-3xl animate-pulse"></div>
+                <div className="absolute -z-20 inset-0 scale-110 bg-gradient-to-br from-estim-green/20 to-estim-gold/20 rounded-full blur-2xl floating-animation"></div>
               </div>
               
               {/* Badge */}
@@ -101,7 +102,7 @@ const Hero = () => {
             <div className="relative">
               <img 
                 src={estimStudents} 
-                alt="Étudiants ESTIM" 
+                alt="Diplômés ESTIM - Cérémonie de remise des diplômes" 
                 className="w-full max-w-lg ml-auto rounded-3xl shadow-2xl object-cover aspect-[4/3]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-estim-green/20 via-transparent to-estim-gold/10 rounded-3xl"></div>

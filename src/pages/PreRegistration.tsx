@@ -2,7 +2,7 @@
 import React from 'react';
 import PreRegistrationHeader from '@/components/PreRegistrationHeader';
 import PreRegistrationForm from '@/components/PreRegistrationForm';
-import estimStudents from '@/assets/estim-students.jpg';
+import estimStudents from '/lovable-uploads/b8c9ac9f-37af-4ed0-aeec-4ce8d8acef4d.png';
 
 const PreRegistration = () => {
   return (
@@ -11,10 +11,10 @@ const PreRegistration = () => {
       <div className="hidden lg:block absolute inset-0 w-full h-full">
         <img 
           src={estimStudents} 
-          alt="Étudiants ESTIM" 
-          className="w-full h-full object-cover opacity-5"
+          alt="Diplômés ESTIM - Cérémonie de remise des diplômes" 
+          className="w-full h-full object-cover opacity-8"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/95"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/88 to-white/90"></div>
       </div>
       
       <div className="container px-4 py-8 relative z-10">
