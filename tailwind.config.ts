@@ -110,8 +110,9 @@ export default {
                 "slide-up": "slide-up 0.5s ease-in-out forwards"
 			},
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-                heading: ['Poppins', 'sans-serif'],
+                sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                heading: ['Playfair Display', 'Georgia', 'serif'],
+                body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
             }
 		}
 	},

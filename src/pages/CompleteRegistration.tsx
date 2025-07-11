@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, User, GraduationCap, FileText, CheckCircle, ChevronRight } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -483,8 +485,10 @@ const CompleteRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5">
-      <div className="container px-4 py-8">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5 pt-16 lg:pt-24">
+        <div className="container px-4 py-8">
         {/* Header */}
         <div className="mb-8">
           <Link to="/" className="inline-flex items-center text-estim-green hover:text-estim-darkGreen mb-6 transition-colors">
@@ -602,8 +606,10 @@ const CompleteRegistration = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

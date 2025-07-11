@@ -1,23 +1,27 @@
 
 import React from 'react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import PreRegistrationHeader from '@/components/PreRegistrationHeader';
 import PreRegistrationForm from '@/components/PreRegistrationForm';
 import estimStudents from '/lovable-uploads/b8c9ac9f-37af-4ed0-aeec-4ce8d8acef4d.png';
 
 const PreRegistration = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5 relative overflow-hidden">
-      {/* Background Image for Desktop/Tablet */}
-      <div className="hidden lg:block absolute inset-0 w-full h-full">
-        <img 
-          src={estimStudents} 
-          alt="Diplômés ESTIM - Cérémonie de remise des diplômes" 
-          className="w-full h-full object-cover opacity-8"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/88 to-white/90"></div>
-      </div>
-      
-      <div className="container px-4 py-8 relative z-10">
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gradient-to-br from-estim-green/5 via-white to-estim-gold/5 relative overflow-hidden pt-16 lg:pt-24">
+        {/* Background Image for Desktop/Tablet */}
+        <div className="hidden lg:block absolute inset-0 w-full h-full">
+          <img 
+            src={estimStudents} 
+            alt="Diplômés ESTIM - Cérémonie de remise des diplômes" 
+            className="w-full h-full object-cover opacity-8"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-white/92 via-white/88 to-white/90"></div>
+        </div>
+        
+        <div className="container px-4 py-8 relative z-10">
         {/* Mobile Layout */}
         <div className="lg:hidden max-w-md mx-auto">
           <PreRegistrationHeader />
@@ -65,8 +69,10 @@ const PreRegistration = () => {
             <PreRegistrationForm />
           </div>
         </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
