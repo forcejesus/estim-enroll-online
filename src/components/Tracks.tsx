@@ -135,19 +135,45 @@ const Tracks = () => {
   ];
 
   return (
-    <section id="tracks" className="py-12 bg-gray-50">
-      <div className="container px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading mb-4 text-gray-800">
-            Nos Filières de Formation
+    <section id="tracks" className="py-16 bg-gradient-to-br from-gray-50 via-white to-estim-green/5 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-estim-green/5 to-estim-gold/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-estim-green/5 rounded-full blur-2xl"></div>
+      
+      <div className="container px-4 relative z-10">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-6 animate-pulse-glow">
+            <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L13.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+            </svg>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold font-heading mb-4 text-gray-800 animate-fade-in">
+            Nos <span className="text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold">Filières</span> d'Excellence
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-estim-green to-estim-gold rounded-full mx-auto mb-4"></div>
-          <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Découvrez nos programmes de formation d'excellence conçus pour répondre aux besoins du marché et vous préparer aux métiers de demain.
+          <div className="w-24 h-1 bg-gradient-to-r from-estim-green to-estim-gold rounded-full mx-auto mb-6 animate-fade-in"></div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8 animate-fade-in">
+            9 programmes innovants alliant théorie et pratique pour former les professionnels de demain. 
+            Choisissez votre voie vers l'excellence.
           </p>
+          
+          {/* Stats highlights */}
+          <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-estim-green mb-1">9</div>
+              <div className="text-xs text-gray-600">Filières</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-estim-gold mb-1">95%</div>
+              <div className="text-xs text-gray-600">Insertion</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-estim-green mb-1">2000+</div>
+              <div className="text-xs text-gray-600">Diplômés</div>
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {tracksData.map((track, index) => (
             <TrackCard
               key={index}
@@ -157,6 +183,24 @@ const Tracks = () => {
               careers={track.careers}
             />
           ))}
+        </div>
+        
+        {/* Call to action */}
+        <div className="text-center mt-12">
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 max-w-2xl mx-auto border border-white/20 shadow-lg">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
+              Prêt à commencer votre parcours ?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Rejoignez plus de 2000 diplômés qui ont choisi ESTIM pour leur réussite professionnelle.
+            </p>
+            <a 
+              href="#hero" 
+              className="inline-flex items-center justify-center px-8 py-3 bg-gradient-to-r from-estim-green to-estim-gold text-white font-semibold rounded-2xl hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Commencer mon inscription
+            </a>
+          </div>
         </div>
       </div>
     </section>

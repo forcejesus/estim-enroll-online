@@ -48,64 +48,99 @@ const Index = () => {
         <Tracks />
         
         {/* Why Choose ESTIM Section */}
-        <section className="py-16 bg-gradient-to-br from-gray-50 to-estim-green/5">
-          <div className="container px-4">
-            <div className="max-w-6xl mx-auto">
+        <section className="py-20 bg-gradient-to-br from-white via-estim-green/5 to-estim-gold/5 relative overflow-hidden">
+          {/* Background elements */}
+          <div className="absolute top-0 left-0 w-72 h-72 bg-gradient-to-br from-estim-green/10 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-estim-gold/10 to-transparent rounded-full blur-3xl"></div>
+          
+          <div className="container px-4 relative z-10">
+            <div className="max-w-7xl mx-auto">
               {/* Section Header */}
-              <div className="text-center mb-12">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-6">
-                  <CheckCircle className="w-8 h-8 text-white" />
+              <div className="text-center mb-16">
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-estim-green to-estim-gold mb-8 animate-pulse-glow">
+                  <CheckCircle className="w-10 h-10 text-white" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold font-heading mb-4 text-gray-800">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-6 text-gray-800 animate-fade-in">
                   Pourquoi choisir <span className="text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold">ESTIM</span> ?
                 </h2>
-                <div className="w-24 h-1 bg-gradient-to-r from-estim-green to-estim-gold rounded-full mx-auto mb-4"></div>
-                <p className="text-gray-600 text-sm leading-relaxed max-w-2xl mx-auto">
-                  Découvrez les avantages uniques qui font d'ESTIM le choix idéal pour votre formation supérieure
+                <div className="w-32 h-1.5 bg-gradient-to-r from-estim-green to-estim-gold rounded-full mx-auto mb-6"></div>
+                <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                  L'excellence académique rencontre l'innovation pédagogique pour former les leaders de demain
                 </p>
               </div>
 
               {/* Features Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green flex-shrink-0">
-                      <Target className="w-6 h-6" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div className="group bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-estim-green/5 to-estim-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-estim-green/20 to-estim-green/30 text-estim-green mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Target className="w-8 h-8" />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold mb-2 text-gray-800">Formation Pratique</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
-                        Programmes axés sur la pratique avec des projets réels, stages en entreprise et équipements modernes.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-gold/20 text-estim-gold flex-shrink-0">
-                      <Users className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold mb-2 text-gray-800">Encadrement Personnalisé</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
-                        Classes à effectif réduit permettant un suivi individualisé de chaque étudiant.
-                      </p>
+                    <h3 className="text-xl font-bold mb-4 text-gray-800 group-hover:text-estim-green transition-colors duration-300">Formation Pratique</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      70% de pratique avec projets réels, stages en entreprise et équipements de pointe pour une immersion totale.
+                    </p>
+                    <div className="flex items-center text-sm text-estim-green font-semibold">
+                      <div className="w-2 h-2 bg-estim-green rounded-full mr-2"></div>
+                      Laboratoires équipés
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-                  <div className="flex items-start space-x-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-estim-green/20 text-estim-green flex-shrink-0">
-                      <Globe className="w-6 h-6" />
+                <div className="group bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-estim-gold/5 to-estim-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-estim-gold/20 to-estim-gold/30 text-estim-gold mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Users className="w-8 h-8" />
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold mb-2 text-gray-800">Insertion Professionnelle</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">
-                        Réseau d'entreprises partenaires et accompagnement à l'insertion professionnelle.
-                      </p>
+                    <h3 className="text-xl font-bold mb-4 text-gray-800 group-hover:text-estim-gold transition-colors duration-300">Encadrement d'Excellence</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      Ratio 1 enseignant pour 15 étudiants garantissant un accompagnement personnalisé et de qualité.
+                    </p>
+                    <div className="flex items-center text-sm text-estim-gold font-semibold">
+                      <div className="w-2 h-2 bg-estim-gold rounded-full mr-2"></div>
+                      Suivi individualisé
                     </div>
+                  </div>
+                </div>
+
+                <div className="group bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-3 border border-white/20 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-estim-green/5 to-estim-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-estim-green/20 to-estim-green/30 text-estim-green mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Globe className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-4 text-gray-800 group-hover:text-estim-green transition-colors duration-300">Insertion Garantie</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">
+                      95% d'insertion professionnelle grâce à notre réseau de 500+ entreprises partenaires.
+                    </p>
+                    <div className="flex items-center text-sm text-estim-green font-semibold">
+                      <div className="w-2 h-2 bg-estim-green rounded-full mr-2"></div>
+                      Réseau entreprises
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Success metrics */}
+              <div className="bg-white/60 backdrop-blur-sm rounded-3xl p-8 border border-white/30 shadow-lg">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                  <div className="group">
+                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold mb-2 group-hover:scale-110 transition-transform duration-300">15+</div>
+                    <div className="text-sm text-gray-600">Années d'expérience</div>
+                  </div>
+                  <div className="group">
+                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-estim-gold to-estim-green mb-2 group-hover:scale-110 transition-transform duration-300">2000+</div>
+                    <div className="text-sm text-gray-600">Diplômés actifs</div>
+                  </div>
+                  <div className="group">
+                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold mb-2 group-hover:scale-110 transition-transform duration-300">95%</div>
+                    <div className="text-sm text-gray-600">Taux d'insertion</div>
+                  </div>
+                  <div className="group">
+                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-estim-gold to-estim-green mb-2 group-hover:scale-110 transition-transform duration-300">500+</div>
+                    <div className="text-sm text-gray-600">Entreprises partenaires</div>
                   </div>
                 </div>
               </div>
