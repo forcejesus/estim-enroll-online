@@ -11,7 +11,7 @@ const Index = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow pt-16 lg:pt-24">
+      <main className="flex-grow">
         <Hero />
         
         {/* Stats Section - Mobile Only (Hidden on Desktop as they're in Hero) */}
@@ -317,8 +317,6 @@ const Index = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
     </div>
   );
 };

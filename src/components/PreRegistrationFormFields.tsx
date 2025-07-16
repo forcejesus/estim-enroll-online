@@ -15,12 +15,12 @@ interface FormFieldProps {
 }
 
 const FormField = ({ id, name, type, label, placeholder, value, onChange, icon, required = true }: FormFieldProps) => (
-  <div className="space-y-2">
-    <label htmlFor={id} className="block text-sm font-semibold text-gray-700">
+  <div className="space-y-3 group">
+    <label htmlFor={id} className="block text-sm font-bold text-gray-800 group-focus-within:text-estim-green transition-colors duration-300">
       {label}
     </label>
     <div className="relative">
-      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400">
+      <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-estim-green transition-colors duration-300 z-10">
         {icon}
       </div>
       <input
@@ -31,8 +31,10 @@ const FormField = ({ id, name, type, label, placeholder, value, onChange, icon, 
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-estim-green focus:border-estim-green transition-all duration-200 text-sm"
+        className="w-full pl-12 pr-6 py-4 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-estim-green/20 focus:border-estim-green transition-all duration-300 text-gray-800 placeholder-gray-400 hover:border-gray-300 shadow-sm hover:shadow-md focus:shadow-lg"
       />
+      {/* Focus indicator */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-estim-green/5 to-estim-gold/5 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
     </div>
   </div>
 );
