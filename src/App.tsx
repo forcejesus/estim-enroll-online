@@ -25,26 +25,18 @@ const App = () => (
         <SidebarProvider>
           <div className="flex min-h-screen w-full">
             <AppSidebar />
-            <div className="flex-1 flex flex-col">
-              <header className="h-12 flex items-center border-b bg-white/80 backdrop-blur-sm">
-                <SidebarTrigger className="ml-4" />
-                <div className="ml-4 text-sm text-gray-600">
-                  École Supérieure de Technologie ESTIM
-                </div>
-              </header>
-              <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/pre-registration" element={<PreRegistration />} />
-                  <Route path="/pre-registration-preview" element={<PreRegistrationPreview />} />
-                  <Route path="/complete-registration" element={<CompleteRegistration />} />
-                  <Route path="/complete-registration-preview" element={<CompleteRegistrationPreview />} />
-                  <Route path="/track/:trackName" element={<TrackDetails />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-            </div>
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/pre-registration" element={<PreRegistration />} />
+                <Route path="/pre-registration-preview" element={<PreRegistrationPreview />} />
+                <Route path="/complete-registration" element={<CompleteRegistration />} />
+                <Route path="/complete-registration-preview" element={<CompleteRegistrationPreview />} />
+                <Route path="/track/:trackName" element={<TrackDetails />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
           </div>
         </SidebarProvider>
       </BrowserRouter>

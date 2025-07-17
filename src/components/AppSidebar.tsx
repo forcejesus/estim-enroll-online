@@ -28,16 +28,9 @@ import {
 import { Button } from './ui/button';
 
 const navigationItems = [
-  { name: 'Accueil', href: '/', icon: Home },
-  { name: 'À propos', href: '/#about', icon: Info },
-  { name: 'Filières', href: '/#tracks', icon: BookOpen },
-  { name: 'Contact', href: '/#contact', icon: Contact },
-];
-
-const admissionItems = [
-  { name: 'Pré-inscription', href: '/pre-registration', icon: FileText },
-  { name: 'Inscription complète', href: '/complete-registration', icon: GraduationCap },
-  { name: 'Conditions d\'admission', href: '/#admission', icon: UserPlus },
+  { name: 'Nos filières', href: '/#tracks', icon: BookOpen },
+  { name: 'Nos contacts', href: '/#contact', icon: Contact },
+  { name: 'Admission', href: '/#admission', icon: GraduationCap },
 ];
 
 export function AppSidebar() {
@@ -85,33 +78,6 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {navigationItems.map((item) => (
-                <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton asChild>
-                    <Link
-                      to={item.href}
-                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 ${
-                        isActive(item.href)
-                          ? 'bg-gradient-to-r from-estim-green/10 to-estim-gold/10 text-estim-green border-l-4 border-estim-green'
-                          : 'text-gray-700 hover:bg-estim-green/5 hover:text-estim-green'
-                      }`}
-                    >
-                      <item.icon className="w-5 h-5" />
-                      {!collapsed && <span className="font-medium">{item.name}</span>}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-sm font-semibold text-gray-700 mb-2">
-            Admission
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {admissionItems.map((item) => (
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
                     <Link
