@@ -28,9 +28,9 @@ import {
 import { Button } from './ui/button';
 
 const navigationItems = [
-  { name: 'Nos filières', href: '/#tracks', icon: BookOpen },
-  { name: 'Nos contacts', href: '/#contact', icon: Contact },
-  { name: 'Admission', href: '/#admission', icon: GraduationCap },
+  { name: 'Nos filières', href: '/tracks', icon: BookOpen },
+  { name: 'Nos contacts', href: '/contact', icon: Contact },
+  { name: 'Admission', href: '/admission', icon: GraduationCap },
 ];
 
 export function AppSidebar() {
@@ -38,44 +38,31 @@ export function AppSidebar() {
   const location = useLocation();
   const collapsed = state === "collapsed";
 
-  const handleNavigation = (href: string) => {
-    if (href.startsWith('/#')) {
-      const hash = href.substring(2);
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
-
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
-    if (path.startsWith('/#')) {
-      return location.hash === path.substring(1);
-    }
     return location.pathname === path;
   };
 
   return (
-    <Sidebar className={collapsed ? "w-16" : "w-80"} collapsible="icon">
-      <SidebarHeader className="p-6 border-b border-border">
+    <Sidebar className={collapsed ? "w-20" : "w-96"} collapsible="icon">
+      <SidebarHeader className="p-8 border-b border-border">
         <Link to="/" className="flex items-center group">
-          <div className="relative w-12 h-12 mr-4">
-            <div className="absolute inset-0 flex items-center justify-center bg-white rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300 border border-gray-100">
+          <div className="relative w-16 h-16 mr-5">
+            <div className="absolute inset-0 flex items-center justify-center bg-white rounded-2xl shadow-xl group-hover:shadow-2xl transition-all duration-300 border border-gray-100">
               <img
                 src="/lovable-uploads/7fd02047-10b5-4456-9c21-26291d67a59b.png"
                 alt="ESTIM Logo"
-                className="w-10 h-10 object-contain"
+                className="w-12 h-12 object-contain"
               />
             </div>
-            <div className="absolute -z-10 inset-0 bg-gradient-to-br from-estim-green/20 to-estim-gold/20 rounded-xl blur-sm group-hover:blur-md transition-all duration-300"></div>
+            <div className="absolute -z-10 inset-0 bg-gradient-to-br from-estim-green/20 to-estim-gold/20 rounded-2xl blur-sm group-hover:blur-md transition-all duration-300"></div>
           </div>
           {!collapsed && (
             <div>
-              <span className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold group-hover:from-estim-darkGreen group-hover:to-estim-gold transition-all duration-300">
+              <span className="font-bold text-3xl text-transparent bg-clip-text bg-gradient-to-r from-estim-green to-estim-gold group-hover:from-estim-darkGreen group-hover:to-estim-gold transition-all duration-300">
                 ESTIM
               </span>
-              <div className="text-xs text-gray-600 -mt-1 font-medium">
+              <div className="text-sm text-gray-600 -mt-1 font-medium">
                 École Supérieure de Technologie
               </div>
             </div>
@@ -83,9 +70,9 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
 
-      <SidebarContent className="p-4">
+      <SidebarContent className="p-6">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sm font-semibold text-gray-700 mb-2">
+          <SidebarGroupLabel className="text-lg font-bold text-gray-700 mb-4 px-2">
             Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -93,21 +80,17 @@ export function AppSidebar() {
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
-                    <a
-                      href={item.href}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleNavigation(item.href);
-                      }}
-                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 cursor-pointer ${
+                    <Link
+                      to={item.href}
+                      className={`flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 hover:scale-105 ${
                         isActive(item.href)
-                          ? 'bg-gradient-to-r from-estim-green/10 to-estim-gold/10 text-estim-green border-l-4 border-estim-green'
-                          : 'text-gray-700 hover:bg-estim-green/5 hover:text-estim-green'
+                          ? 'bg-gradient-to-r from-estim-green/15 to-estim-gold/15 text-estim-green border-l-4 border-estim-green shadow-lg'
+                          : 'text-gray-700 hover:bg-estim-green/8 hover:text-estim-green hover:shadow-md'
                       }`}
                     >
-                      <item.icon className="w-5 h-5" />
-                      {!collapsed && <span className="font-medium">{item.name}</span>}
-                    </a>
+                      <item.icon className="w-7 h-7" />
+                      {!collapsed && <span className="font-semibold text-lg">{item.name}</span>}
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -117,22 +100,26 @@ export function AppSidebar() {
 
         {!collapsed && (
           <SidebarGroup>
-            <SidebarGroupLabel className="text-sm font-semibold text-gray-700 mb-2">
-              Actions rapides
+            <SidebarGroupLabel className="text-lg font-bold text-gray-700 mb-4 px-2">
+              Admission
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <Link to="/pre-registration" className="w-full">
                   <Button 
+                    size="lg"
                     variant="outline" 
-                    className="w-full border-2 border-estim-green text-estim-green hover:bg-estim-green hover:text-white font-semibold py-3 rounded-xl transition-all duration-300"
+                    className="w-full border-3 border-estim-green text-estim-green hover:bg-estim-green hover:text-white font-bold py-4 text-lg rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-lg"
                   >
                     Pré-inscription
                   </Button>
                 </Link>
                 <Link to="/complete-registration" className="w-full">
-                  <Button className="w-full bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl">
-                    S'inscrire maintenant
+                  <Button 
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-estim-green to-estim-gold hover:from-estim-darkGreen hover:to-estim-gold text-white font-bold py-4 text-lg rounded-2xl transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl"
+                  >
+                    Inscription complète
                   </Button>
                 </Link>
               </div>
@@ -142,18 +129,18 @@ export function AppSidebar() {
       </SidebarContent>
 
       {!collapsed && (
-        <SidebarFooter className="p-4 border-t border-border">
-          <div className="space-y-3 text-sm text-gray-600">
-            <div className="flex items-center space-x-2">
-              <Phone className="w-4 h-4 text-estim-green" />
+        <SidebarFooter className="p-6 border-t border-border">
+          <div className="space-y-4 text-base text-gray-600">
+            <div className="flex items-center space-x-3">
+              <Phone className="w-5 h-5 text-estim-green" />
               <span>+212 522 XXX XXX</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="w-4 h-4 text-estim-green" />
+            <div className="flex items-center space-x-3">
+              <Mail className="w-5 h-5 text-estim-green" />
               <span>contact@estim-edu.com</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <MapPin className="w-4 h-4 text-estim-green" />
+            <div className="flex items-center space-x-3">
+              <MapPin className="w-5 h-5 text-estim-green" />
               <span>Casablanca, Maroc</span>
             </div>
           </div>
