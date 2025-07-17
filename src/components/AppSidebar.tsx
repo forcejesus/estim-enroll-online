@@ -38,9 +38,22 @@ export function AppSidebar() {
   const location = useLocation();
   const collapsed = state === "collapsed";
 
+  const handleNavigation = (href: string) => {
+    if (href.startsWith('/#')) {
+      const hash = href.substring(2);
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
-    return location.pathname === path || location.hash === path.split('#')[1];
+    if (path.startsWith('/#')) {
+      return location.hash === path.substring(1);
+    }
+    return location.pathname === path;
   };
 
   return (
@@ -80,9 +93,13 @@ export function AppSidebar() {
               {navigationItems.map((item) => (
                 <SidebarMenuItem key={item.name}>
                   <SidebarMenuButton asChild>
-                    <Link
-                      to={item.href}
-                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 ${
+                    <a
+                      href={item.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleNavigation(item.href);
+                      }}
+                      className={`flex items-center space-x-3 p-3 rounded-xl transition-all duration-300 cursor-pointer ${
                         isActive(item.href)
                           ? 'bg-gradient-to-r from-estim-green/10 to-estim-gold/10 text-estim-green border-l-4 border-estim-green'
                           : 'text-gray-700 hover:bg-estim-green/5 hover:text-estim-green'
@@ -90,7 +107,7 @@ export function AppSidebar() {
                     >
                       <item.icon className="w-5 h-5" />
                       {!collapsed && <span className="font-medium">{item.name}</span>}
-                    </Link>
+                    </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

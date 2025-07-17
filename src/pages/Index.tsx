@@ -1,17 +1,36 @@
-import React from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import React, { useEffect } from 'react';
 import Hero from '@/components/Hero';
 import Tracks from '@/components/Tracks';
 import Partners from '@/components/Partners';
 import { Award, Target, Users, Globe, CheckCircle, BookOpen, Trophy, Star, Calendar, MapPin, Phone, Mail } from 'lucide-react';
 
 const Index = () => {
+  // Handle anchor navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    // Handle initial load with hash
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      
-      <main className="flex-grow">
+    <div className="min-h-screen">
+      <main>
         <Hero />
         
         {/* Stats Section - Mobile Only (Hidden on Desktop as they're in Hero) */}
@@ -45,7 +64,10 @@ const Index = () => {
           </div>
         </section>
 
-        <Tracks />
+        {/* Tracks Section */}
+        <section id="tracks">
+          <Tracks />
+        </section>
         
         {/* Why Choose ESTIM Section */}
         <section className="py-20 bg-gradient-to-br from-white via-estim-green/5 to-estim-gold/5 relative overflow-hidden">
